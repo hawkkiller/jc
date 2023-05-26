@@ -34,7 +34,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol JCNativeApi {
+protocol JcNativeApi {
   /// Logs the client in with the specified app account number and name.
   ///
   /// [appAccountNumber] is the app account number to log in with.
@@ -66,10 +66,10 @@ protocol JCNativeApi {
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class JCNativeApiSetup {
-  /// The codec used by JCNativeApi.
-  /// Sets up an instance of `JCNativeApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JCNativeApi?) {
+class JcNativeApiSetup {
+  /// The codec used by JcNativeApi.
+  /// Sets up an instance of `JcNativeApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcNativeApi?) {
     /// Logs the client in with the specified app account number and name.
     ///
     /// [appAccountNumber] is the app account number to log in with.
@@ -77,7 +77,7 @@ class JCNativeApiSetup {
     /// [name] is the name to log in with.
     ///
     /// Returns `true` if the login was started successfully, `false` otherwise.
-    let loginChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JCNativeApi.login", binaryMessenger: binaryMessenger)
+    let loginChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcNativeApi.login", binaryMessenger: binaryMessenger)
     if let api = api {
       loginChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -102,7 +102,7 @@ class JCNativeApiSetup {
     /// Returns `true` if the conference was joined successfully, `false` otherwise.
     ///
     /// The client must be logged in before calling this method. See [login].
-    let joinConferenceChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JCNativeApi.joinConference", binaryMessenger: binaryMessenger)
+    let joinConferenceChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcNativeApi.joinConference", binaryMessenger: binaryMessenger)
     if let api = api {
       joinConferenceChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -127,7 +127,7 @@ class JCNativeApiSetup {
     /// Returns `true` if the call was initiated successfully, `false` otherwise.
     ///
     /// The client must be logged in before calling this method. See [login].
-    let callChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JCNativeApi.call", binaryMessenger: binaryMessenger)
+    let callChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcNativeApi.call", binaryMessenger: binaryMessenger)
     if let api = api {
       callChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]

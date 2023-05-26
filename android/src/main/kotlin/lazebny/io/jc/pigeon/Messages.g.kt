@@ -42,7 +42,7 @@ class FlutterError (
   val details: Any? = null
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface JCNativeApi {
+interface JcNativeApi {
   /**
    * Logs the client in with the specified app account number and name.
    *
@@ -79,15 +79,15 @@ interface JCNativeApi {
   fun call(userID: String, video: Boolean): Boolean
 
   companion object {
-    /** The codec used by JCNativeApi. */
+    /** The codec used by JcNativeApi. */
     val codec: MessageCodec<Any?> by lazy {
       StandardMessageCodec()
     }
-    /** Sets up an instance of `JCNativeApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `JcNativeApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: JCNativeApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: JcNativeApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JCNativeApi.login", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JcNativeApi.login", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -106,7 +106,7 @@ interface JCNativeApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JCNativeApi.joinConference", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JcNativeApi.joinConference", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>
@@ -125,7 +125,7 @@ interface JCNativeApi {
         }
       }
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JCNativeApi.call", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JcNativeApi.call", codec)
         if (api != null) {
           channel.setMessageHandler { message, reply ->
             val args = message as List<Any?>

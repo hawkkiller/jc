@@ -10,7 +10,7 @@ import 'package:pigeon/pigeon.dart';
   ),
 )
 @HostApi()
-abstract class JCNativeApi {
+abstract class JcNativeApi {
   /// Logs the client in with the specified app account number and name.
   ///
   /// [appAccountNumber] is the app account number to log in with.

@@ -8,11 +8,11 @@ import 'dart:typed_data' show Float64List, Int32List, Int64List, Uint8List;
 import 'package:flutter/foundation.dart' show ReadBuffer, WriteBuffer;
 import 'package:flutter/services.dart';
 
-class JCNativeApi {
-  /// Constructor for [JCNativeApi].  The [binaryMessenger] named argument is
+class JcNativeApi {
+  /// Constructor for [JcNativeApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  JCNativeApi({BinaryMessenger? binaryMessenger})
+  JcNativeApi({BinaryMessenger? binaryMessenger})
       : _binaryMessenger = binaryMessenger;
   final BinaryMessenger? _binaryMessenger;
 
@@ -27,7 +27,7 @@ class JCNativeApi {
   /// Returns `true` if the login was started successfully, `false` otherwise.
   Future<bool> login(String arg_appAccountNumber, String arg_name) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.JCNativeApi.login', codec,
+        'dev.flutter.pigeon.JcNativeApi.login', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_appAccountNumber, arg_name]) as List<Object?>?;
@@ -63,7 +63,7 @@ class JCNativeApi {
   /// The client must be logged in before calling this method. See [login].
   Future<bool> joinConference(String arg_conferenceID, String arg_password) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.JCNativeApi.joinConference', codec,
+        'dev.flutter.pigeon.JcNativeApi.joinConference', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_conferenceID, arg_password]) as List<Object?>?;
@@ -99,7 +99,7 @@ class JCNativeApi {
   /// The client must be logged in before calling this method. See [login].
   Future<bool> call(String arg_userID, bool arg_video) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.JCNativeApi.call', codec,
+        'dev.flutter.pigeon.JcNativeApi.call', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
         await channel.send(<Object?>[arg_userID, arg_video]) as List<Object?>?;

@@ -7,13 +7,13 @@ import 'package:jc/src/model/client_state.dart';
 /// The shared platform implementation of [JcPlatform].
 class SharedPlatform extends JcPlatform {
   SharedPlatform({
-    @visibleForTesting JCClientStateChannel? clientStateChannel,
-    @visibleForTesting JCNativeApi? nativeApi,
-  })  : _nativeApi = nativeApi ?? JCNativeApi(),
-        _clientStateChannel = clientStateChannel ?? JCClientStateChannelImpl();
+    @visibleForTesting JcClientStateChannel? clientStateChannel,
+    @visibleForTesting JcNativeApi? nativeApi,
+  })  : _nativeApi = nativeApi ?? JcNativeApi(),
+        _clientStateChannel = clientStateChannel ?? JcClientStateChannelImpl();
 
-  final JCNativeApi _nativeApi;
-  final JCClientStateChannel _clientStateChannel;
+  final JcNativeApi _nativeApi;
+  final JcClientStateChannel _clientStateChannel;
 
   @override
   Future<bool> login(String appAccountNumber, String name) =>
