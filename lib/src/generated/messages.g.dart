@@ -18,9 +18,13 @@ class JCNativeApi {
 
   static const MessageCodec<Object?> codec = StandardMessageCodec();
 
-  /// Log into the JC to be able to do the calls.
-  /// 
-  /// Return true if the process successfully started. Otherwise, return false.
+  /// Logs the client in with the specified app account number and name.
+  ///
+  /// [appAccountNumber] is the app account number to log in with.
+  ///
+  /// [name] is the name to log in with.
+  ///
+  /// Returns `true` if the login was started successfully, `false` otherwise.
   Future<bool> login(String arg_appAccountNumber, String arg_name) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.JCNativeApi.login', codec,
@@ -48,6 +52,15 @@ class JCNativeApi {
     }
   }
 
+  /// Joins the specified conference.
+  ///
+  /// [conferenceID] is the ID of the conference to join.
+  ///
+  /// [password] is the password of the conference to join.
+  ///
+  /// Returns `true` if the conference was joined successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method. See [login].
   Future<bool> joinConference(String arg_conferenceID, String arg_password) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.JCNativeApi.joinConference', codec,
@@ -75,6 +88,15 @@ class JCNativeApi {
     }
   }
 
+  /// Initiates a call to the specified user.
+  ///
+  /// [userID] is the user ID of the user to call.
+  ///
+  /// [video] is whether the call should be a video call.
+  ///
+  /// Returns `true` if the call was initiated successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method. See [login].
   Future<bool> call(String arg_userID, bool arg_video) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.JCNativeApi.call', codec,

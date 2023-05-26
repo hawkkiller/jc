@@ -14,4 +14,4 @@ tasks:
       - mkdir -p $ANDROID && touch $ANDROID/Messages.g.kt
       - mkdir -p $IOS && touch $IOS/Messages.g.swift
       - mkdir -p $DART && touch $DART/messages.g.dart
-      - flutter pub run pigeon --input pigeons/messages.dart
+      - dart run pigeon --input pigeons/messages.dart
