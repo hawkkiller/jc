@@ -1,0 +1,17 @@
+version: "3"
+tasks:
+  pub:get:
+    cmds:
+      - flutter pub get
+  pub:pigeon:
+    deps:
+      - pub:get
+    env:
+      ANDROID: "android/src/main/kotlin/lazebny/io/jc/pigeon/"
+      IOS: "ios/Classes/pigeon/"
+      DART: "lib/src/generated/"
+    cmds:
+      - mkdir -p $ANDROID && touch $ANDROID/Messages.g.kt
+      - mkdir -p $IOS && touch $IOS/Messages.g.swift
+      - mkdir -p $DART && touch $DART/messages.g.dart
+      - flutter pub run pigeon --input pigeons/messages.dart
