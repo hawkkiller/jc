@@ -1,8 +1,3 @@
-
-import 'jc_platform_interface.dart';
-
-class Jc {
-  Future<String?> getPlatformVersion() {
-    return JcPlatform.instance.getPlatformVersion();
-  }
-}
+export 'src/logic/jc_platform_interface.dart';
+export 'src/logic/jc_sdk.dart';
+export 'src/logic/shared_platform.dart';

@@ -42,24 +42,72 @@ class FlutterError (
   val details: Any? = null
 ) : Throwable()
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
-interface ExampleHostApi {
-  fun getHostLanguage(): String
+interface JCNativeApi {
+  /**
+   * Log into the JC to be able to do the calls.
+   * 
+   * Return true if the process successfully started. Otherwise, return false.
+   */
+  fun login(appAccountNumber: String, name: String): Boolean
+  fun joinConference(conferenceID: String, password: String): Boolean
+  fun call(userID: String, video: Boolean): Boolean
 
   companion object {
-    /** The codec used by ExampleHostApi. */
+    /** The codec used by JCNativeApi. */
     val codec: MessageCodec<Any?> by lazy {
       StandardMessageCodec()
     }
-    /** Sets up an instance of `ExampleHostApi` to handle messages through the `binaryMessenger`. */
+    /** Sets up an instance of `JCNativeApi` to handle messages through the `binaryMessenger`. */
     @Suppress("UNCHECKED_CAST")
-    fun setUp(binaryMessenger: BinaryMessenger, api: ExampleHostApi?) {
+    fun setUp(binaryMessenger: BinaryMessenger, api: JCNativeApi?) {
       run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.ExampleHostApi.getHostLanguage", codec)
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JCNativeApi.login", codec)
         if (api != null) {
-          channel.setMessageHandler { _, reply ->
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val appAccountNumberArg = args[0] as String
+            val nameArg = args[1] as String
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.getHostLanguage())
+              wrapped = listOf<Any?>(api.login(appAccountNumberArg, nameArg))
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JCNativeApi.joinConference", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val conferenceIDArg = args[0] as String
+            val passwordArg = args[1] as String
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.joinConference(conferenceIDArg, passwordArg))
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JCNativeApi.call", codec)
+        if (api != null) {
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val userIDArg = args[0] as String
+            val videoArg = args[1] as Boolean
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.call(userIDArg, videoArg))
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

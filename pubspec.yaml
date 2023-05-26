@@ -1,21 +1,22 @@
 name: jc
 description: A new Flutter plugin project.
 version: 0.0.1
-homepage:
+homepage: github.com/hawkkiller/jc
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
-  flutter: ">=2.5.0"
+  sdk: '>=3.0.0'
+  flutter: ">=3.10.0"
 
 dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  stream_transform: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  sizzle_lints: ^1.0.10
   pigeon: ^10.0.0
 
 # For information on the generic Dart part of this file, see the

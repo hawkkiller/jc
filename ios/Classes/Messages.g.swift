@@ -34,27 +34,70 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol ExampleHostApi {
-  func getHostLanguage() throws -> String
+protocol JCNativeApi {
+  /// Log into the JC to be able to do the calls.
+  /// 
+  /// Return true if the process successfully started. Otherwise, return false.
+  func login(appAccountNumber: String, name: String) throws -> Bool
+  func joinConference(conferenceID: String, password: String) throws -> Bool
+  func call(userID: String, video: Bool) throws -> Bool
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class ExampleHostApiSetup {
-  /// The codec used by ExampleHostApi.
-  /// Sets up an instance of `ExampleHostApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: ExampleHostApi?) {
-    let getHostLanguageChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.ExampleHostApi.getHostLanguage", binaryMessenger: binaryMessenger)
+class JCNativeApiSetup {
+  /// The codec used by JCNativeApi.
+  /// Sets up an instance of `JCNativeApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JCNativeApi?) {
+    /// Log into the JC to be able to do the calls.
+    /// 
+    /// Return true if the process successfully started. Otherwise, return false.
+    let loginChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JCNativeApi.login", binaryMessenger: binaryMessenger)
     if let api = api {
-      getHostLanguageChannel.setMessageHandler { _, reply in
+      loginChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let appAccountNumberArg = args[0] as! String
+        let nameArg = args[1] as! String
         do {
-          let result = try api.getHostLanguage()
+          let result = try api.login(appAccountNumber: appAccountNumberArg, name: nameArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
         }
       }
     } else {
-      getHostLanguageChannel.setMessageHandler(nil)
+      loginChannel.setMessageHandler(nil)
+    }
+    let joinConferenceChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JCNativeApi.joinConference", binaryMessenger: binaryMessenger)
+    if let api = api {
+      joinConferenceChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let conferenceIDArg = args[0] as! String
+        let passwordArg = args[1] as! String
+        do {
+          let result = try api.joinConference(conferenceID: conferenceIDArg, password: passwordArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      joinConferenceChannel.setMessageHandler(nil)
+    }
+    let callChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JCNativeApi.call", binaryMessenger: binaryMessenger)
+    if let api = api {
+      callChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let userIDArg = args[0] as! String
+        let videoArg = args[1] as! Bool
+        do {
+          let result = try api.call(userID: userIDArg, video: videoArg)
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      callChannel.setMessageHandler(nil)
     }
   }
 }
