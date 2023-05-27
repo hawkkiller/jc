@@ -34,7 +34,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
   return value as! T?
 }
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
-protocol JcNativeApi {
+protocol JcApi {
   /// Logs the client in with the specified app account number and name.
   ///
   /// [appAccountNumber] is the app account number to log in with.
@@ -66,10 +66,10 @@ protocol JcNativeApi {
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
-class JcNativeApiSetup {
-  /// The codec used by JcNativeApi.
-  /// Sets up an instance of `JcNativeApi` to handle messages through the `binaryMessenger`.
-  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcNativeApi?) {
+class JcApiSetup {
+  /// The codec used by JcApi.
+  /// Sets up an instance of `JcApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcApi?) {
     /// Logs the client in with the specified app account number and name.
     ///
     /// [appAccountNumber] is the app account number to log in with.
@@ -77,7 +77,7 @@ class JcNativeApiSetup {
     /// [name] is the name to log in with.
     ///
     /// Returns `true` if the login was started successfully, `false` otherwise.
-    let loginChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcNativeApi.login", binaryMessenger: binaryMessenger)
+    let loginChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcApi.login", binaryMessenger: binaryMessenger)
     if let api = api {
       loginChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -102,7 +102,7 @@ class JcNativeApiSetup {
     /// Returns `true` if the conference was joined successfully, `false` otherwise.
     ///
     /// The client must be logged in before calling this method. See [login].
-    let joinConferenceChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcNativeApi.joinConference", binaryMessenger: binaryMessenger)
+    let joinConferenceChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcApi.joinConference", binaryMessenger: binaryMessenger)
     if let api = api {
       joinConferenceChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -127,7 +127,7 @@ class JcNativeApiSetup {
     /// Returns `true` if the call was initiated successfully, `false` otherwise.
     ///
     /// The client must be logged in before calling this method. See [login].
-    let callChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcNativeApi.call", binaryMessenger: binaryMessenger)
+    let callChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcApi.call", binaryMessenger: binaryMessenger)
     if let api = api {
       callChannel.setMessageHandler { message, reply in
         let args = message as! [Any?]
@@ -142,6 +142,200 @@ class JcNativeApiSetup {
       }
     } else {
       callChannel.setMessageHandler(nil)
+    }
+  }
+}
+/// Generated protocol from Pigeon that represents a handler of messages from Flutter.
+protocol JcCallControllerApi {
+  /// Enables or disables the microphone.
+  func enableMicrophone(value: Bool) throws
+  /// Enables or disables the camera.
+  func enableCamera(value: Bool) throws
+  /// Enables or disables the speaker.
+  func enableSpeaker(value: Bool) throws
+  /// Switches the camera.
+  func switchCamera() throws
+  /// Terminates the call.
+  func terminate() throws
+}
+
+/// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
+class JcCallControllerApiSetup {
+  /// The codec used by JcCallControllerApi.
+  /// Sets up an instance of `JcCallControllerApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcCallControllerApi?) {
+    /// Enables or disables the microphone.
+    let enableMicrophoneChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcCallControllerApi.enableMicrophone", binaryMessenger: binaryMessenger)
+    if let api = api {
+      enableMicrophoneChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let valueArg = args[0] as! Bool
+        do {
+          try api.enableMicrophone(value: valueArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      enableMicrophoneChannel.setMessageHandler(nil)
+    }
+    /// Enables or disables the camera.
+    let enableCameraChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcCallControllerApi.enableCamera", binaryMessenger: binaryMessenger)
+    if let api = api {
+      enableCameraChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let valueArg = args[0] as! Bool
+        do {
+          try api.enableCamera(value: valueArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      enableCameraChannel.setMessageHandler(nil)
+    }
+    /// Enables or disables the speaker.
+    let enableSpeakerChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcCallControllerApi.enableSpeaker", binaryMessenger: binaryMessenger)
+    if let api = api {
+      enableSpeakerChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let valueArg = args[0] as! Bool
+        do {
+          try api.enableSpeaker(value: valueArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      enableSpeakerChannel.setMessageHandler(nil)
+    }
+    /// Switches the camera.
+    let switchCameraChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcCallControllerApi.switchCamera", binaryMessenger: binaryMessenger)
+    if let api = api {
+      switchCameraChannel.setMessageHandler { _, reply in
+        do {
+          try api.switchCamera()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      switchCameraChannel.setMessageHandler(nil)
+    }
+    /// Terminates the call.
+    let terminateChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcCallControllerApi.terminate", binaryMessenger: binaryMessenger)
+    if let api = api {
+      terminateChannel.setMessageHandler { _, reply in
+        do {
+          try api.terminate()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      terminateChannel.setMessageHandler(nil)
+    }
+  }
+}
+/// Generated protocol from Pigeon that represents a handler of messages from Flutter.
+protocol JcConferenceControllerApi {
+  /// Enables or disables the microphone.
+  func enableMicrophone(value: Bool) throws
+  /// Enables or disables the camera.
+  func enableCamera(value: Bool) throws
+  /// Enables or disables the speaker.
+  func enableSpeaker(value: Bool) throws
+  /// Switches the camera.
+  func switchCamera() throws
+  /// Leaves the conference.
+  func leave() throws
+}
+
+/// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
+class JcConferenceControllerApiSetup {
+  /// The codec used by JcConferenceControllerApi.
+  /// Sets up an instance of `JcConferenceControllerApi` to handle messages through the `binaryMessenger`.
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcConferenceControllerApi?) {
+    /// Enables or disables the microphone.
+    let enableMicrophoneChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcConferenceControllerApi.enableMicrophone", binaryMessenger: binaryMessenger)
+    if let api = api {
+      enableMicrophoneChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let valueArg = args[0] as! Bool
+        do {
+          try api.enableMicrophone(value: valueArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      enableMicrophoneChannel.setMessageHandler(nil)
+    }
+    /// Enables or disables the camera.
+    let enableCameraChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcConferenceControllerApi.enableCamera", binaryMessenger: binaryMessenger)
+    if let api = api {
+      enableCameraChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let valueArg = args[0] as! Bool
+        do {
+          try api.enableCamera(value: valueArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      enableCameraChannel.setMessageHandler(nil)
+    }
+    /// Enables or disables the speaker.
+    let enableSpeakerChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcConferenceControllerApi.enableSpeaker", binaryMessenger: binaryMessenger)
+    if let api = api {
+      enableSpeakerChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let valueArg = args[0] as! Bool
+        do {
+          try api.enableSpeaker(value: valueArg)
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      enableSpeakerChannel.setMessageHandler(nil)
+    }
+    /// Switches the camera.
+    let switchCameraChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcConferenceControllerApi.switchCamera", binaryMessenger: binaryMessenger)
+    if let api = api {
+      switchCameraChannel.setMessageHandler { _, reply in
+        do {
+          try api.switchCamera()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      switchCameraChannel.setMessageHandler(nil)
+    }
+    /// Leaves the conference.
+    let leaveChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcConferenceControllerApi.leave", binaryMessenger: binaryMessenger)
+    if let api = api {
+      leaveChannel.setMessageHandler { _, reply in
+        do {
+          try api.leave()
+          reply(wrapResult(nil))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      leaveChannel.setMessageHandler(nil)
     }
   }
 }

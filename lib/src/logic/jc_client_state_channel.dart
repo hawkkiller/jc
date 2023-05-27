@@ -2,12 +2,13 @@ import 'package:flutter/services.dart';
 import 'package:jc/src/model/client_state.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-abstract class JcClientStateChannel {
+abstract interface class JcClientStateChannel {
+  /// Stream of client state.
   Stream<ClientState> get clientStateStream;
 }
 
-class JcClientStateChannelImpl implements JcClientStateChannel {
-  JcClientStateChannelImpl() {
+base class JcClientStateChannelBase implements JcClientStateChannel {
+  JcClientStateChannelBase() {
     _eventChannel = const EventChannel('lazebny.io.jc/client_state_event_channel');
     clientStateStream = _eventChannel
         .receiveBroadcastStream()

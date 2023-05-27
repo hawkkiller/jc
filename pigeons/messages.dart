@@ -10,7 +10,7 @@ import 'package:pigeon/pigeon.dart';
   ),
 )
 @HostApi()
-abstract class JcNativeApi {
+abstract class JcApi {
   /// Logs the client in with the specified app account number and name.
   ///
   /// [appAccountNumber] is the app account number to log in with.
@@ -41,4 +41,40 @@ abstract class JcNativeApi {
   ///
   /// The client must be logged in before calling this method. See [login].
   bool call(String userID, bool video);
+}
+
+@HostApi()
+abstract class JcCallControllerApi {
+  /// Enables or disables the microphone.
+  void enableMicrophone(bool value);
+
+  /// Enables or disables the camera.
+  void enableCamera(bool value);
+
+  /// Enables or disables the speaker.
+  void enableSpeaker(bool value);
+
+  /// Switches the camera.
+  void switchCamera();
+
+  /// Terminates the call.
+  void terminate();
+}
+
+@HostApi()
+abstract class JcConferenceControllerApi {
+  /// Enables or disables the microphone.
+  void enableMicrophone(bool value);
+
+  /// Enables or disables the camera.
+  void enableCamera(bool value);
+
+  /// Enables or disables the speaker.
+  void enableSpeaker(bool value);
+
+  /// Switches the camera.
+  void switchCamera();
+
+  /// Leaves the conference.
+  void leave();
 }
