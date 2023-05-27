@@ -17,28 +17,30 @@ abstract interface class JcConferenceStateChannel {
 
 base class JcConferenceStateChannelBase implements JcConferenceStateChannel {
   JcConferenceStateChannelBase() {
-    _jcCallStateChannelSelf = const EventChannel(
+    _jcCallStateEventChannelSelf = const EventChannel(
       'lazebny.io.jc/jc_call_state_channel',
     );
-    _jcCallStateChannelOther = const EventChannel(
+    _jcCallStateEventChannelOther = const EventChannel(
       'lazebny.io.jc/jc_conference_state_channel',
     );
 
-    members =
-        _jcCallStateChannelOther.receiveBroadcastStream().whereType<List<Object>>().asyncExpand(
-              (event) => Stream.value(
-                event.map((e) => $memberCodec.decode(e as List<Object>)).toList(),
-              ),
-            );
+    members = _jcCallStateEventChannelOther
+        .receiveBroadcastStream()
+        .whereType<List<Object>>()
+        .asyncMap<List<Member>>(
+          (event) => Stream.fromIterable(event)
+              .asyncMap((event) => Future.value($memberCodec.decode(event as List<Object>)))
+              .toList(),
+        );
 
-    selfMember = _jcCallStateChannelSelf
+    selfMember = _jcCallStateEventChannelSelf
         .receiveBroadcastStream()
         .whereType<List<Object>>()
         .map($selfMemberCodec.decode);
   }
 
-  late final EventChannel _jcCallStateChannelSelf;
-  late final EventChannel _jcCallStateChannelOther;
+  late final EventChannel _jcCallStateEventChannelSelf;
+  late final EventChannel _jcCallStateEventChannelOther;
 
   @override
   late final Stream<List<Member>> members;
