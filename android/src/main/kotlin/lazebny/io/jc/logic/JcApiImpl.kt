@@ -12,7 +12,8 @@ class JcApiImpl(private val context: Context) : JcApi {
         return JCManager.getInstance().client.login(appAccountNumber, "123", loginParam)
     }
 
-    override fun initialize(): Boolean {
+    override fun initialize(appKey: String): Boolean {
+        JCManager.sAppkey = appKey
         return JCManager.getInstance().initialize(context)
     }
 }

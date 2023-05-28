@@ -1,3 +1,5 @@
+import 'package:jc/src/model/member.dart';
+
 /// The base class for all controllers.
 abstract interface class Controller {
   /// Enables or disables the microphone.
@@ -27,10 +29,10 @@ abstract interface class ConferenceController extends Controller {
   Future<void> leave();
 
   /// The stream of the other members in the conference.
-  Stream<List<void>> get members;
+  Stream<List<Member>> get members;
 
   /// The stream of the self member in the conference.
-  Stream<void> get selfMember;
+  Stream<SelfMember> get selfMember;
 }
 
 /// The controller for a call.
@@ -39,8 +41,8 @@ abstract interface class CallController extends Controller {
   Future<void> terminate();
 
   /// The stream of the other member in the call.
-  Stream<void> get otherMember;
+  Stream<Member> get otherMember;
 
   /// The stream of the self member in the call.
-  Stream<void> get selfMember;
+  Stream<SelfMember> get selfMember;
 }

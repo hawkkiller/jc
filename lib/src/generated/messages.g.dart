@@ -55,12 +55,12 @@ class JcApi {
   /// Initializes the engine.
   /// 
   /// Returns `true` if the engine was initialized successfully, `false` otherwise.
-  Future<bool> initialize() async {
+  Future<bool> initialize(String arg_appKey) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.JcApi.initialize', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(null) as List<Object?>?;
+        await channel.send(<Object?>[arg_appKey]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

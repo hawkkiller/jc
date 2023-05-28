@@ -1,5 +1,4 @@
 import 'package:jc/jc.dart';
-import 'package:jc/src/common/jc_controller.dart';
 import 'package:jc/src/generated/messages.g.dart';
 import 'package:jc/src/logic/jc_call_controller.dart';
 import 'package:jc/src/logic/jc_client_state_channel.dart';
@@ -39,5 +38,5 @@ class SharedPlatform extends JcPlatform {
   Stream<ClientState> get clientStateStream => _clientStateChannel.clientStateStream;
   
   @override
-  Future<bool> initialize() => _jcApi.initialize();
+  Future<bool> initialize(String appKey) => _jcApi.initialize(appKey);
 }

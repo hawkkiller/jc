@@ -20,10 +20,8 @@ class _MemberDecoder extends Converter<Map<String, Object?>, Member> {
 
   @override
   Member convert(Map<String, Object?> input) => Member(
-        id: input['id']! as String,
-        name: input['name']! as String,
-        videoEnabled: input['videoEnabled']! as bool,
-        microphoneEnabled: input['microphoneEnabled']! as bool,
+        video: input['video']! as bool,
+        microphone: input['microphone']! as bool,
       );
 }
 
@@ -32,10 +30,8 @@ class _MemberEncoder extends Converter<Member, Map<String, Object?>> {
 
   @override
   Map<String, Object?> convert(Member input) => {
-        'id': input.id,
-        'name': input.name,
-        'videoEnabled': input.videoEnabled,
-        'microphoneEnabled': input.microphoneEnabled,
+        'video': input.video,
+        'microphone': input.microphone,
       };
 }
 
@@ -54,11 +50,9 @@ class _SelfMemberDecoder extends Converter<Map<String, Object?>, SelfMember> {
 
   @override
   SelfMember convert(Map<String, Object?> input) => SelfMember(
-        id: input['id']! as String,
-        name: input['name']! as String,
-        videoEnabled: input['videoEnabled']! as bool,
-        microphoneEnabled: input['microphoneEnabled']! as bool,
-        speakerEnabled: input['speakerEnabled']! as bool,
+        video: input['video']! as bool,
+        microphone: input['microphone']! as bool,
+        speaker: input['speaker']! as bool,
       );
 }
 
@@ -67,10 +61,8 @@ class _SelfMemberEncoder extends Converter<SelfMember, Map<String, Object?>> {
 
   @override
   Map<String, Object?> convert(SelfMember input) => {
-        'id': input.id,
-        'name': input.name,
-        'videoEnabled': input.videoEnabled,
-        'microphoneEnabled': input.microphoneEnabled,
-        'speakerEnabled': input.speakerEnabled,
+        'video': input.video,
+        'microphone': input.microphone,
+        'speaker': input.speaker,
       };
 }

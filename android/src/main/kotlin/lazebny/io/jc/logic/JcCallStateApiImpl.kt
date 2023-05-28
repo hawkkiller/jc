@@ -5,8 +5,8 @@ import lazebny.io.jc.common.JcCallStateApi
 import lazebny.io.jc.logic.JcWrapper.JCManager
 
 class JcCallStateApiImpl : JcCallStateApi {
-    override fun audio(): Boolean {
-        return !JCManager.getInstance().call.activeCallItem.microphoneMute
+    override fun microphone(): Boolean {
+        return !(JCManager.getInstance().call.activeCallItem?.microphoneMute ?: true)
     }
 
     override fun video(): Boolean {
@@ -19,7 +19,7 @@ class JcCallStateApiImpl : JcCallStateApi {
         return JCManager.getInstance().mediaDevice.isSpeakerOn
     }
 
-    override fun otherAudio(): Boolean {
+    override fun otherMicrophone(): Boolean {
         return !(JCManager.getInstance().call.activeCallItem?.otherAudioInterrupt ?: true)
     }
 

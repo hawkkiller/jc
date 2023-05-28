@@ -58,7 +58,7 @@ interface JcApi {
    * 
    * Returns `true` if the engine was initialized successfully, `false` otherwise.
    */
-  fun initialize(): Boolean
+  fun initialize(appKey: String): Boolean
 
   companion object {
     /** The codec used by JcApi. */
@@ -90,10 +90,12 @@ interface JcApi {
       run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JcApi.initialize", codec)
         if (api != null) {
-          channel.setMessageHandler { _, reply ->
+          channel.setMessageHandler { message, reply ->
+            val args = message as List<Any?>
+            val appKeyArg = args[0] as String
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.initialize())
+              wrapped = listOf<Any?>(api.initialize(appKeyArg))
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

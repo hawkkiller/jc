@@ -23,7 +23,7 @@ abstract class JcApi {
   /// Initializes the engine.
   /// 
   /// Returns `true` if the engine was initialized successfully, `false` otherwise.
-  bool initialize();
+  bool initialize(String appKey);
 }
 
 @HostApi()

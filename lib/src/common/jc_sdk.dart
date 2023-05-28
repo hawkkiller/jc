@@ -3,6 +3,12 @@ import 'package:jc/src/common/jc_controller.dart';
 import 'package:jc/src/model/client_state.dart';
 
 class JcSdk {
+  JcSdk._();
+
+  static JcSdk get instance => _instance;
+
+  static final JcSdk _instance = JcSdk._();
+
   static JcPlatform get _platform => JcPlatform.instance;
 
   /// Logs the client in with the specified app account number and name.
@@ -53,7 +59,7 @@ class JcSdk {
   /// Initializes the SDK.
   ///
   /// Returns `true` if the SDK was initialized successfully, `false` otherwise.
-  Future<bool> initialize() => _platform.initialize();
+  Future<bool> initialize(String appKey) => _platform.initialize(appKey);
 
   /// A stream of client states.
   Stream<ClientState> get clientStateStream => _platform.clientStateStream;

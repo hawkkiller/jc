@@ -1,8 +1,8 @@
 package lazebny.io.jc.logic.JcWrapper;
 
-import static com.michaellazebny.jyphoon.jc.utils.CustomAudioInputUtil.encodeValue;
-import static com.michaellazebny.jyphoon.jc.utils.CustomAudioInputUtil.getByteArrayFromFilePath;
-import static com.michaellazebny.jyphoon.jc.utils.CustomAudioInputUtil.saveAssetFile;
+import static lazebny.io.jc.utils.CustomAudioInputUtil.encodeValue;
+import static lazebny.io.jc.utils.CustomAudioInputUtil.getByteArrayFromFilePath;
+import static lazebny.io.jc.utils.CustomAudioInputUtil.saveAssetFile;
 
 import android.content.Context;
 
@@ -11,8 +11,9 @@ import com.juphoon.cloud.JCCall;
 import com.juphoon.cloud.JCMediaChannel;
 import com.juphoon.cloud.JCMediaDevice;
 import com.juphoon.cloud.JCVideoFrameCallback;
-import com.michaellazebny.jyphoon.jc.jcWrapper.JCEvent.JCEvent;
-import com.michaellazebny.jyphoon.jc.utils.JCAudioTrack;
+
+import lazebny.io.jc.logic.JcWrapper.JCEvent.JCEvent;
+import lazebny.io.jc.utils.JCAudioTrack;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -14,7 +14,7 @@ import lazebny.io.jc.logic.JcConferenceApiImpl
 class JcPlugin : FlutterPlugin {
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        val jcApi = JcApiImpl()
+        val jcApi = JcApiImpl(flutterPluginBinding.applicationContext)
         val jcCallApi = JcCallApiImpl()
         val jcConferenceApi = JcConferenceApiImpl()
         val jcCallControllerApi = JcCallControllerApiImpl()
@@ -24,7 +24,6 @@ class JcPlugin : FlutterPlugin {
         JcConferenceApi.setUp(flutterPluginBinding.binaryMessenger, jcConferenceApi)
         JcCallControllerApi.setUp(flutterPluginBinding.binaryMessenger, jcCallControllerApi)
         JcCallStateApi.setUp(flutterPluginBinding.binaryMessenger, jcCallStateApi)
-
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {

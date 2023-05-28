@@ -46,7 +46,7 @@ protocol JcApi {
   /// Initializes the engine.
   /// 
   /// Returns `true` if the engine was initialized successfully, `false` otherwise.
-  func initialize() throws -> Bool
+  func initialize(appKey: String) throws -> Bool
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -82,9 +82,11 @@ class JcApiSetup {
     /// Returns `true` if the engine was initialized successfully, `false` otherwise.
     let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcApi.initialize", binaryMessenger: binaryMessenger)
     if let api = api {
-      initializeChannel.setMessageHandler { _, reply in
+      initializeChannel.setMessageHandler { message, reply in
+        let args = message as! [Any?]
+        let appKeyArg = args[0] as! String
         do {
-          let result = try api.initialize()
+          let result = try api.initialize(appKey: appKeyArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))

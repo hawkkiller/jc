@@ -64,7 +64,7 @@ abstract class JcPlatform extends PlatformInterface {
   /// Initializes the engine.
   ///
   /// Returns `true` if the engine was initialized successfully, `false` otherwise.
-  Future<bool> initialize();
+  Future<bool> initialize(String appKey);
 
   /// A stream of client states.
   Stream<ClientState> get clientStateStream;

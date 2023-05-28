@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/services.dart';
 import 'package:jc/src/logic/member_codec.dart';
 import 'package:jc/src/model/member.dart';
@@ -5,7 +7,7 @@ import 'package:stream_transform/stream_transform.dart';
 
 abstract interface class JcCallStateChannel {
   /// Stream of other member in the call.
-  /// 
+  ///
   /// This stream emits a new model of member every time the status or properties changes.
   Stream<Member> get otherMember;
 
@@ -25,10 +27,14 @@ base class JcCallStateChannelBase implements JcCallStateChannel {
         .receiveBroadcastStream()
         .whereType<Map<String, Object?>>()
         .map($memberCodec.decode);
-    
+
     selfMember = _jcCallStateChannelSelf
         .receiveBroadcastStream()
-        .whereType<Map<String, Object?>>()
+        .map<Map<Object?, Object?>>((event) {
+          log('event: ${event.runtimeType}');
+          return event as Map<Object?, Object?>;
+        })
+        .map((event) => event.cast<String, Object?>())
         .map($selfMemberCodec.decode);
   }
 
