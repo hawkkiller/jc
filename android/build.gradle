@@ -37,10 +37,19 @@ android {
     }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        main {
+            java.srcDirs += 'src/main/kotlin'
+            jniLibs.srcDirs = ['sdk']
+        }
+
     }
 
     defaultConfig {
         minSdkVersion 16
     }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], exclude: 'JCCloudWrapper.jar', dir: 'sdk/')
+    implementation 'org.greenrobot:eventbus:3.1.0-RC'
 }
