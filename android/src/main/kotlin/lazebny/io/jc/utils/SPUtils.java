@@ -1,4 +1,4 @@
-package lazebny.io.jc.Utils;
+package lazebny.io.jc.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

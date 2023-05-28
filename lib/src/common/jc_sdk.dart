@@ -12,14 +12,13 @@ class JcSdk {
   /// [name] is the name to log in with.
   ///
   /// Returns `true` if the login was started successfully, `false` otherwise.
+  ///
+  /// The sdk must be initialized before calling this method. See [initialize].
   Future<bool> login({
     required String appAccountNumber,
     required String name,
   }) =>
-      _platform.login(
-        appAccountNumber,
-        name,
-      );
+      _platform.login(appAccountNumber, name);
 
   /// Initiates a call to the specified user.
   ///
@@ -34,10 +33,7 @@ class JcSdk {
     required String userID,
     required bool video,
   }) =>
-      _platform.call(
-        userID,
-        video: video,
-      );
+      _platform.call(userID, video: video);
 
   /// Joins the specified conference.
   ///
@@ -52,12 +48,11 @@ class JcSdk {
     required String conferenceID,
     String password = '',
   }) =>
-      _platform.joinConference(
-        conferenceID,
-        password: password,
-      );
+      _platform.joinConference(conferenceID, password: password);
 
   /// Initializes the SDK.
+  ///
+  /// Returns `true` if the SDK was initialized successfully, `false` otherwise.
   Future<bool> initialize() => _platform.initialize();
 
   /// A stream of client states.

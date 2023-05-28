@@ -35,7 +35,7 @@ import com.juphoon.cloud.JCStorage;
 import com.juphoon.cloud.JCStorageCallback;
 import com.juphoon.cloud.JCStorageItem;
 
-import lazebny.io.jc.Utils.SPUtils;
+import lazebny.io.jc.utils.SPUtils;
 import lazebny.io.jc.logic.JcWrapper.JCEvent.JCAccountQueryStatusEvent;
 import lazebny.io.jc.logic.JcWrapper.JCEvent.JCCallDtmfReceivedEvent;
 import lazebny.io.jc.logic.JcWrapper.JCEvent.JCCallMessageEvent;
