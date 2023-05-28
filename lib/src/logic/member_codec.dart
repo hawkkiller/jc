@@ -5,72 +5,72 @@ import 'package:jc/src/model/member.dart';
 const $memberCodec = MemberCodec();
 const $selfMemberCodec = SelfMemberCodec();
 
-base class MemberCodec extends Codec<Member, List<Object>> {
+base class MemberCodec extends Codec<Member, Map<String, Object?>> {
   const MemberCodec();
 
   @override
-  Converter<List<Object>, Member> get decoder => const _MemberDecoder();
+  Converter<Map<String, Object?>, Member> get decoder => const _MemberDecoder();
 
   @override
-  Converter<Member, List<Object>> get encoder => const _MemberEncoder();
+  Converter<Member, Map<String, Object?>> get encoder => const _MemberEncoder();
 }
 
-class _MemberDecoder extends Converter<List<Object>, Member> {
+class _MemberDecoder extends Converter<Map<String, Object?>, Member> {
   const _MemberDecoder();
 
   @override
-  Member convert(List<Object> input) => Member(
-        id: input[0] as String,
-        name: input[1] as String,
-        videoEnabled: input[2] as bool,
-        microphoneEnabled: input[3] as bool,
+  Member convert(Map<String, Object?> input) => Member(
+        id: input['id']! as String,
+        name: input['name']! as String,
+        videoEnabled: input['videoEnabled']! as bool,
+        microphoneEnabled: input['microphoneEnabled']! as bool,
       );
 }
 
-class _MemberEncoder extends Converter<Member, List<Object>> {
+class _MemberEncoder extends Converter<Member, Map<String, Object?>> {
   const _MemberEncoder();
 
   @override
-  List<Object> convert(Member input) => <Object>[
-        input.id,
-        input.name,
-        input.videoEnabled,
-        input.microphoneEnabled,
-      ];
+  Map<String, Object?> convert(Member input) => {
+        'id': input.id,
+        'name': input.name,
+        'videoEnabled': input.videoEnabled,
+        'microphoneEnabled': input.microphoneEnabled,
+      };
 }
 
-base class SelfMemberCodec extends Codec<SelfMember, List<Object>> {
+base class SelfMemberCodec extends Codec<SelfMember, Map<String, Object?>> {
   const SelfMemberCodec();
 
   @override
-  Converter<List<Object>, SelfMember> get decoder => const _SelfMemberDecoder();
+  Converter<Map<String, Object?>, SelfMember> get decoder => const _SelfMemberDecoder();
 
   @override
-  Converter<SelfMember, List<Object>> get encoder => const _SelfMemberEncoder();
+  Converter<SelfMember, Map<String, Object?>> get encoder => const _SelfMemberEncoder();
 }
 
-class _SelfMemberDecoder extends Converter<List<Object>, SelfMember> {
+class _SelfMemberDecoder extends Converter<Map<String, Object?>, SelfMember> {
   const _SelfMemberDecoder();
 
   @override
-  SelfMember convert(List<Object> input) => SelfMember(
-        id: input[0] as String,
-        name: input[1] as String,
-        videoEnabled: input[2] as bool,
-        microphoneEnabled: input[3] as bool,
-        speakerEnabled: input[4] as bool,
+  SelfMember convert(Map<String, Object?> input) => SelfMember(
+        id: input['id']! as String,
+        name: input['name']! as String,
+        videoEnabled: input['videoEnabled']! as bool,
+        microphoneEnabled: input['microphoneEnabled']! as bool,
+        speakerEnabled: input['speakerEnabled']! as bool,
       );
 }
 
-class _SelfMemberEncoder extends Converter<SelfMember, List<Object>> {
+class _SelfMemberEncoder extends Converter<SelfMember, Map<String, Object?>> {
   const _SelfMemberEncoder();
 
   @override
-  List<Object> convert(SelfMember input) => <Object>[
-        input.id,
-        input.name,
-        input.videoEnabled,
-        input.microphoneEnabled,
-        input.speakerEnabled,
-      ];
+  Map<String, Object?> convert(SelfMember input) => {
+        'id': input.id,
+        'name': input.name,
+        'videoEnabled': input.videoEnabled,
+        'microphoneEnabled': input.microphoneEnabled,
+        'speakerEnabled': input.speakerEnabled,
+      };
 }
