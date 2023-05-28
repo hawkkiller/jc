@@ -57,6 +57,9 @@ class JcSdk {
         password: password,
       );
 
+  /// Initializes the SDK.
+  Future<bool> initialize() => _platform.initialize();
+
   /// A stream of client states.
   Stream<ClientState> get clientStateStream => _platform.clientStateStream;
 }

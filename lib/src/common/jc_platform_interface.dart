@@ -42,7 +42,10 @@ abstract class JcPlatform extends PlatformInterface {
   /// Returns `true` if the conference was joined successfully, `false` otherwise.
   ///
   /// The client must be logged in before calling this method. See [login].
-  Future<ConferenceController> joinConference(String conferenceID, {String password = ''});
+  Future<ConferenceController> joinConference(
+    String conferenceID, {
+    String password = '',
+  });
 
   /// Initiates a call to the specified user.
   ///
@@ -53,7 +56,15 @@ abstract class JcPlatform extends PlatformInterface {
   /// Returns [CallController] if the call was started successfully, throws [Exception] otherwise.
   ///
   /// The client must be logged in before calling this method. See [login].
-  Future<CallController> call(String userID, {bool video = false});
+  Future<CallController> call(
+    String userID, {
+    bool video = false,
+  });
+
+  /// Initializes the engine.
+  ///
+  /// Returns `true` if the engine was initialized successfully, `false` otherwise.
+  Future<bool> initialize();
 
   /// A stream of client states.
   Stream<ClientState> get clientStateStream;

@@ -37,4 +37,7 @@ class SharedPlatform extends JcPlatform {
 
   @override
   Stream<ClientState> get clientStateStream => _clientStateChannel.clientStateStream;
+  
+  @override
+  Future<bool> initialize() => _jcApi.initialize();
 }
