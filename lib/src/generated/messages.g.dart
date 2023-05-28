@@ -51,78 +51,6 @@ class JcApi {
       return (replyList[0] as bool?)!;
     }
   }
-
-  /// Joins the specified conference.
-  ///
-  /// [conferenceID] is the ID of the conference to join.
-  ///
-  /// [password] is the password of the conference to join.
-  ///
-  /// Returns `true` if the conference was joined successfully, `false` otherwise.
-  ///
-  /// The client must be logged in before calling this method. See [login].
-  Future<bool> joinConference(String arg_conferenceID, String arg_password) async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.JcApi.joinConference', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_conferenceID, arg_password]) as List<Object?>?;
-    if (replyList == null) {
-      throw PlatformException(
-        code: 'channel-error',
-        message: 'Unable to establish connection on channel.',
-      );
-    } else if (replyList.length > 1) {
-      throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
-        details: replyList[2],
-      );
-    } else if (replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    } else {
-      return (replyList[0] as bool?)!;
-    }
-  }
-
-  /// Initiates a call to the specified user.
-  ///
-  /// [userID] is the user ID of the user to call.
-  ///
-  /// [video] is whether the call should be a video call.
-  ///
-  /// Returns `true` if the call was initiated successfully, `false` otherwise.
-  ///
-  /// The client must be logged in before calling this method. See [login].
-  Future<bool> call(String arg_userID, bool arg_video) async {
-    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
-        'dev.flutter.pigeon.JcApi.call', codec,
-        binaryMessenger: _binaryMessenger);
-    final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_userID, arg_video]) as List<Object?>?;
-    if (replyList == null) {
-      throw PlatformException(
-        code: 'channel-error',
-        message: 'Unable to establish connection on channel.',
-      );
-    } else if (replyList.length > 1) {
-      throw PlatformException(
-        code: replyList[0]! as String,
-        message: replyList[1] as String?,
-        details: replyList[2],
-      );
-    } else if (replyList[0] == null) {
-      throw PlatformException(
-        code: 'null-error',
-        message: 'Host platform returned null value for non-null return value.',
-      );
-    } else {
-      return (replyList[0] as bool?)!;
-    }
-  }
 }
 
 class JcCallControllerApi {
@@ -373,6 +301,100 @@ class JcConferenceControllerApi {
       );
     } else {
       return;
+    }
+  }
+}
+
+class JcCallApi {
+  /// Constructor for [JcCallApi].  The [binaryMessenger] named argument is
+  /// available for dependency injection.  If it is left null, the default
+  /// BinaryMessenger will be used which routes to the host platform.
+  JcCallApi({BinaryMessenger? binaryMessenger})
+      : _binaryMessenger = binaryMessenger;
+  final BinaryMessenger? _binaryMessenger;
+
+  static const MessageCodec<Object?> codec = StandardMessageCodec();
+
+  /// Initiates a call to the specified user.
+  ///
+  /// [userID] is the user ID of the user to call.
+  ///
+  /// [video] is whether the call should be a video call.
+  ///
+  /// Returns `true` if the call was initiated successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method.
+  Future<bool> call(String arg_userID, bool arg_video) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.JcCallApi.call', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(<Object?>[arg_userID, arg_video]) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else if (replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyList[0] as bool?)!;
+    }
+  }
+}
+
+class JcConferenceApi {
+  /// Constructor for [JcConferenceApi].  The [binaryMessenger] named argument is
+  /// available for dependency injection.  If it is left null, the default
+  /// BinaryMessenger will be used which routes to the host platform.
+  JcConferenceApi({BinaryMessenger? binaryMessenger})
+      : _binaryMessenger = binaryMessenger;
+  final BinaryMessenger? _binaryMessenger;
+
+  static const MessageCodec<Object?> codec = StandardMessageCodec();
+
+  /// Joins the specified conference.
+  ///
+  /// [conferenceID] is the ID of the conference to join.
+  ///
+  /// [password] is the password of the conference to join.
+  ///
+  /// Returns `true` if the conference was joined successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method.
+  Future<bool> joinConference(String arg_conferenceID, String arg_password) async {
+    final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
+        'dev.flutter.pigeon.JcConferenceApi.joinConference', codec,
+        binaryMessenger: _binaryMessenger);
+    final List<Object?>? replyList =
+        await channel.send(<Object?>[arg_conferenceID, arg_password]) as List<Object?>?;
+    if (replyList == null) {
+      throw PlatformException(
+        code: 'channel-error',
+        message: 'Unable to establish connection on channel.',
+      );
+    } else if (replyList.length > 1) {
+      throw PlatformException(
+        code: replyList[0]! as String,
+        message: replyList[1] as String?,
+        details: replyList[2],
+      );
+    } else if (replyList[0] == null) {
+      throw PlatformException(
+        code: 'null-error',
+        message: 'Host platform returned null value for non-null return value.',
+      );
+    } else {
+      return (replyList[0] as bool?)!;
     }
   }
 }

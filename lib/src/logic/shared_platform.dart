@@ -1,6 +1,9 @@
 import 'package:jc/jc.dart';
+import 'package:jc/src/common/jc_controller.dart';
 import 'package:jc/src/generated/messages.g.dart';
+import 'package:jc/src/logic/jc_call_controller.dart';
 import 'package:jc/src/logic/jc_client_state_channel.dart';
+import 'package:jc/src/logic/jc_conference_controller.dart';
 import 'package:jc/src/model/client_state.dart';
 import 'package:meta/meta.dart';
 
@@ -16,19 +19,21 @@ class SharedPlatform extends JcPlatform {
   final JcClientStateChannel _clientStateChannel;
 
   @override
-  Future<bool> login(String appAccountNumber, String name) =>
-      _jcApi.login(appAccountNumber, name);
+  Future<bool> login(String appAccountNumber, String name) => _jcApi.login(appAccountNumber, name);
 
   @override
-  Future<bool> call(
+  Future<CallController> call(
     String userID, {
     bool video = true,
   }) =>
-      _jcApi.call(userID, video);
+      JcCallController.create(userID: userID, video: video);
 
   @override
-  Future<bool> joinConference(String conferenceID, String password) =>
-      _jcApi.joinConference(conferenceID, password);
+  Future<ConferenceController> joinConference(
+    String conferenceID, {
+    String password = '',
+  }) =>
+      JcConferenceController.create(conferenceID: conferenceID, password: password);
 
   @override
   Stream<ClientState> get clientStateStream => _clientStateChannel.clientStateStream;

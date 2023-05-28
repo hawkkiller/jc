@@ -19,28 +19,6 @@ abstract class JcApi {
   ///
   /// Returns `true` if the login was started successfully, `false` otherwise.
   bool login(String appAccountNumber, String name);
-
-  /// Joins the specified conference.
-  ///
-  /// [conferenceID] is the ID of the conference to join.
-  ///
-  /// [password] is the password of the conference to join.
-  ///
-  /// Returns `true` if the conference was joined successfully, `false` otherwise.
-  ///
-  /// The client must be logged in before calling this method. See [login].
-  bool joinConference(String conferenceID, String password);
-
-  /// Initiates a call to the specified user.
-  ///
-  /// [userID] is the user ID of the user to call.
-  ///
-  /// [video] is whether the call should be a video call.
-  ///
-  /// Returns `true` if the call was initiated successfully, `false` otherwise.
-  ///
-  /// The client must be logged in before calling this method. See [login].
-  bool call(String userID, bool video);
 }
 
 @HostApi()
@@ -77,4 +55,32 @@ abstract class JcConferenceControllerApi {
 
   /// Leaves the conference.
   void leave();
+}
+
+@HostApi()
+abstract class JcCallApi {
+  /// Initiates a call to the specified user.
+  ///
+  /// [userID] is the user ID of the user to call.
+  ///
+  /// [video] is whether the call should be a video call.
+  ///
+  /// Returns `true` if the call was initiated successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method.
+  bool call(String userID, bool video);
+}
+
+@HostApi()
+abstract class JcConferenceApi {
+  /// Joins the specified conference.
+  ///
+  /// [conferenceID] is the ID of the conference to join.
+  ///
+  /// [password] is the password of the conference to join.
+  ///
+  /// Returns `true` if the conference was joined successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method.
+  bool joinConference(String conferenceID, String password);
 }

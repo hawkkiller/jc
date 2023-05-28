@@ -1,3 +1,4 @@
+import 'package:jc/src/common/jc_controller.dart';
 import 'package:jc/src/logic/shared_platform.dart';
 import 'package:jc/src/model/client_state.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -41,7 +42,7 @@ abstract class JcPlatform extends PlatformInterface {
   /// Returns `true` if the conference was joined successfully, `false` otherwise.
   ///
   /// The client must be logged in before calling this method. See [login].
-  Future<bool> joinConference(String conferenceID, String password);
+  Future<ConferenceController> joinConference(String conferenceID, {String password = ''});
 
   /// Initiates a call to the specified user.
   ///
@@ -49,10 +50,10 @@ abstract class JcPlatform extends PlatformInterface {
   ///
   /// [video] is whether the call should be a video call.
   ///
-  /// Returns `true` if the call was initiated successfully, `false` otherwise.
+  /// Returns [CallController] if the call was started successfully, throws [Exception] otherwise.
   ///
   /// The client must be logged in before calling this method. See [login].
-  Future<bool> call(String userID, {bool video = false});
+  Future<CallController> call(String userID, {bool video = false});
 
   /// A stream of client states.
   Stream<ClientState> get clientStateStream;
