@@ -19,6 +19,11 @@ abstract class JcApi {
   ///
   /// Returns `true` if the login was started successfully, `false` otherwise.
   bool login(String appAccountNumber, String name);
+
+  /// Initializes the engine.
+  /// 
+  /// Returns `true` if the engine was initialized successfully, `false` otherwise.
+  bool initialize();
 }
 
 @HostApi()

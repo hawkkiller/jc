@@ -15,10 +15,10 @@ abstract interface class JcCallStateChannel {
 base class JcCallStateChannelBase implements JcCallStateChannel {
   JcCallStateChannelBase() {
     _jcCallStateChannelSelf = const EventChannel(
-      'lazebny.io.jc/jc_call_state_channel',
+      'lazebny.io.jc/jc_call_state_channel/self',
     );
     _jcCallStateChannelOther = const EventChannel(
-      'lazebny.io.jc/jc_conference_state_channel',
+      'lazebny.io.jc/jc_call_state_channel/other',
     );
 
     otherMember = _jcCallStateChannelOther

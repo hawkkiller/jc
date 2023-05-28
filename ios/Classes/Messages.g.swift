@@ -43,6 +43,10 @@ protocol JcApi {
   ///
   /// Returns `true` if the login was started successfully, `false` otherwise.
   func login(appAccountNumber: String, name: String) throws -> Bool
+  /// Initializes the engine.
+  /// 
+  /// Returns `true` if the engine was initialized successfully, `false` otherwise.
+  func initialize() throws -> Bool
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
@@ -72,6 +76,22 @@ class JcApiSetup {
       }
     } else {
       loginChannel.setMessageHandler(nil)
+    }
+    /// Initializes the engine.
+    /// 
+    /// Returns `true` if the engine was initialized successfully, `false` otherwise.
+    let initializeChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcApi.initialize", binaryMessenger: binaryMessenger)
+    if let api = api {
+      initializeChannel.setMessageHandler { _, reply in
+        do {
+          let result = try api.initialize()
+          reply(wrapResult(result))
+        } catch {
+          reply(wrapError(error))
+        }
+      }
+    } else {
+      initializeChannel.setMessageHandler(nil)
     }
   }
 }

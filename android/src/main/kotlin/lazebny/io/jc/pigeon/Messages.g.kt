@@ -53,6 +53,12 @@ interface JcApi {
    * Returns `true` if the login was started successfully, `false` otherwise.
    */
   fun login(appAccountNumber: String, name: String): Boolean
+  /**
+   * Initializes the engine.
+   * 
+   * Returns `true` if the engine was initialized successfully, `false` otherwise.
+   */
+  fun initialize(): Boolean
 
   companion object {
     /** The codec used by JcApi. */
@@ -72,6 +78,22 @@ interface JcApi {
             var wrapped: List<Any?>
             try {
               wrapped = listOf<Any?>(api.login(appAccountNumberArg, nameArg))
+            } catch (exception: Throwable) {
+              wrapped = wrapError(exception)
+            }
+            reply.reply(wrapped)
+          }
+        } else {
+          channel.setMessageHandler(null)
+        }
+      }
+      run {
+        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.JcApi.initialize", codec)
+        if (api != null) {
+          channel.setMessageHandler { _, reply ->
+            var wrapped: List<Any?>
+            try {
+              wrapped = listOf<Any?>(api.initialize())
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }
