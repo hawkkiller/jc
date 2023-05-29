@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:dotenv/dotenv.dart';
 import 'package:example/src/feature/feed/widget/feed_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:jc/jc.dart';
@@ -23,8 +24,8 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   Future<void> _initialize() async {
-    const key = String.fromEnvironment('JC_APP_KEY');
-    final initialized = await JcSdk.instance.initialize(key);
+    DotEnv().load(['.env']);
+    final initialized = await JcSdk.instance.initialize(DotEnv()['JC_APP_KEY']!);
     log('JcSdk initialized: $initialized');
     final login = await JcSdk.instance.login(
       appAccountNumber: 'lazebny.io',

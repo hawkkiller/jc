@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   jc:
     path: ../
+  dotenv: ^4.1.0
 
 dev_dependencies:
   flutter_test:

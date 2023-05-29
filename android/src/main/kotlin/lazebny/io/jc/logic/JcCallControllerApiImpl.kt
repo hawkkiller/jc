@@ -2,13 +2,21 @@ package lazebny.io.jc.logic
 
 import JcCallControllerApi
 import com.juphoon.cloud.JCCall
+import lazebny.io.jc.logic.JcWrapper.JCEvent.JCEvent
 import lazebny.io.jc.logic.JcWrapper.JCManager
+import org.greenrobot.eventbus.EventBus
 
 class JcCallControllerApiImpl : JcCallControllerApi {
 
     override fun enableMicrophone(value: Boolean) {
         JCManager.getInstance().call.activeCallItem?.let {
             JCManager.getInstance().call.muteMicrophone(it, !value)
+            if (value) {
+                JCManager.getInstance().mediaDevice.startAudio()
+            } else {
+                JCManager.getInstance().mediaDevice.stopAudio()
+            }
+            EventBus.getDefault().post(JCEvent(JCEvent.EventType.CALL_UI))
         }
     }
 

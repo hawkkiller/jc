@@ -11,7 +11,9 @@ class JcCallStateApiImpl : JcCallStateApi {
                 || JCManager.getInstance().call.activeCallItem?.state == JCCall.STATE_TALKING
 
     override fun microphone(): Boolean {
-        return !(JCManager.getInstance().call.activeCallItem?.microphoneMute ?: true)
+        val microphoneMute = JCManager.getInstance().call.activeCallItem?.microphoneMute ?: true
+        val audioStarted = JCManager.getInstance().mediaDevice.isAudioStart
+        return audioStarted && !microphoneMute
     }
 
     override fun video(): Boolean {
