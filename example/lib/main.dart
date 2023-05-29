@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:dotenv/dotenv.dart';
 import 'package:example/src/feature/feed/widget/feed_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:jc/jc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runZonedGuarded(
@@ -24,14 +25,16 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   Future<void> _initialize() async {
-    DotEnv().load(['.env']);
-    final initialized = await JcSdk.instance.initialize(DotEnv()['JC_APP_KEY']!);
+    await dotenv.load(fileName: '.env');
+    final initialized = await JcSdk.instance.initialize(dotenv.get('JC_APP_KEY'));
     log('JcSdk initialized: $initialized');
     final login = await JcSdk.instance.login(
       appAccountNumber: 'lazebny.io',
       name: 'Michael Lazebny',
     );
     log('JcSdk login: $login');
+    final req = await Permission.camera.request();
+    log('Permission.camera.request: $req');
   }
 
   @override

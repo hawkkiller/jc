@@ -5,3 +5,4 @@ export 'src/logic/jc_call_controller.dart';
 export 'src/logic/shared_platform.dart';
 export 'src/model/call_status.dart';
 export 'src/model/member.dart';
+export 'src/platformView/jc_call_self_view.dart';

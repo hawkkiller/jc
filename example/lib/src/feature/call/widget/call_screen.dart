@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jc/jc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class CallScreen extends StatefulWidget {
   const CallScreen({super.key});
@@ -107,13 +108,7 @@ class _CallScreenState extends State<CallScreen> {
                         ],
                         const Text('Realtime stats: '),
                         Text('Status: $status'),
-                        StreamBuilder<SelfMember>(
-                          stream: _callController.selfMember,
-                          builder: (context, snapshot) {
-                            final data = snapshot.data;
-                            return Text('SelfMember: $data');
-                          },
-                        ),
+                        Text('SelfMember: $selfMember'),
                         StreamBuilder<Member>(
                           stream: _callController.otherMember,
                           builder: (context, snapshot) {
@@ -121,6 +116,12 @@ class _CallScreenState extends State<CallScreen> {
                             return Text('OtherMember: $data');
                           },
                         ),
+                        if (selfMember != null && selfMember.video)
+                          const SizedBox(
+                            height: 200,
+                            width: 100,
+                            child: JCCallSelfView(),
+                          ),
                       ],
                     );
                   });

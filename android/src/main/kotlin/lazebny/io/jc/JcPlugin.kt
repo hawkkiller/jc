@@ -6,6 +6,8 @@ import lazebny.io.jc.common.JcCallStateApi
 import lazebny.io.jc.logic.JcApiImpl
 import lazebny.io.jc.logic.JcCallControllerApiImpl
 import lazebny.io.jc.logic.JcCallStateApiImpl
+import lazebny.io.jc.platformView.JcCallSelfPlatformView
+import lazebny.io.jc.platformView.JcCallSelfPlatformViewFactory
 
 /** JcPlugin */
 class JcPlugin : FlutterPlugin {
@@ -17,6 +19,10 @@ class JcPlugin : FlutterPlugin {
         JcApi.setUp(flutterPluginBinding.binaryMessenger, jcApi)
         JcCallControllerApi.setUp(flutterPluginBinding.binaryMessenger, jcCallControllerApi)
         JcCallStateApi.setUp(flutterPluginBinding.binaryMessenger, jcCallStateApi)
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            "JcCallSelfView",
+            JcCallSelfPlatformViewFactory(),
+        )
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
