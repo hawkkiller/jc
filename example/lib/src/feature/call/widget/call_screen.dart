@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:jc/jc.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class CallScreen extends StatefulWidget {
   const CallScreen({super.key});
