@@ -2,65 +2,65 @@ import 'dart:convert';
 
 import 'package:jc/src/model/member.dart';
 
-const $memberCodec = MemberCodec();
-const $selfMemberCodec = SelfMemberCodec();
+const $callMemberCodec = CallMemberCodec();
+const $selfCallMemberCodec = SelfCallMemberCodec();
 
-base class MemberCodec extends Codec<Member, Map<String, Object?>> {
-  const MemberCodec();
-
-  @override
-  Converter<Map<String, Object?>, Member> get decoder => const _MemberDecoder();
+base class CallMemberCodec extends Codec<CallMember, Map<String, Object?>> {
+  const CallMemberCodec();
 
   @override
-  Converter<Member, Map<String, Object?>> get encoder => const _MemberEncoder();
+  Converter<Map<String, Object?>, CallMember> get decoder => const _CallMemberDecoder();
+
+  @override
+  Converter<CallMember, Map<String, Object?>> get encoder => const _CallMemberEncoder();
 }
 
-class _MemberDecoder extends Converter<Map<String, Object?>, Member> {
-  const _MemberDecoder();
+class _CallMemberDecoder extends Converter<Map<String, Object?>, CallMember> {
+  const _CallMemberDecoder();
 
   @override
-  Member convert(Map<String, Object?> input) => Member(
+  CallMember convert(Map<String, Object?> input) => CallMember(
         video: input['video']! as bool,
         microphone: input['microphone']! as bool,
       );
 }
 
-class _MemberEncoder extends Converter<Member, Map<String, Object?>> {
-  const _MemberEncoder();
+class _CallMemberEncoder extends Converter<CallMember, Map<String, Object?>> {
+  const _CallMemberEncoder();
 
   @override
-  Map<String, Object?> convert(Member input) => {
+  Map<String, Object?> convert(CallMember input) => {
         'video': input.video,
         'microphone': input.microphone,
       };
 }
 
-base class SelfMemberCodec extends Codec<SelfMember, Map<String, Object?>> {
-  const SelfMemberCodec();
+base class SelfCallMemberCodec extends Codec<CallSelfMember, Map<String, Object?>> {
+  const SelfCallMemberCodec();
 
   @override
-  Converter<Map<String, Object?>, SelfMember> get decoder => const _SelfMemberDecoder();
+  Converter<Map<String, Object?>, CallSelfMember> get decoder => const _SelfMemberDecoder();
 
   @override
-  Converter<SelfMember, Map<String, Object?>> get encoder => const _SelfMemberEncoder();
+  Converter<CallSelfMember, Map<String, Object?>> get encoder => const _SelfMemberEncoder();
 }
 
-class _SelfMemberDecoder extends Converter<Map<String, Object?>, SelfMember> {
+class _SelfMemberDecoder extends Converter<Map<String, Object?>, CallSelfMember> {
   const _SelfMemberDecoder();
 
   @override
-  SelfMember convert(Map<String, Object?> input) => SelfMember(
+  CallSelfMember convert(Map<String, Object?> input) => CallSelfMember(
         video: input['video']! as bool,
         microphone: input['microphone']! as bool,
         speaker: input['speaker']! as bool,
       );
 }
 
-class _SelfMemberEncoder extends Converter<SelfMember, Map<String, Object?>> {
+class _SelfMemberEncoder extends Converter<CallSelfMember, Map<String, Object?>> {
   const _SelfMemberEncoder();
 
   @override
-  Map<String, Object?> convert(SelfMember input) => {
+  Map<String, Object?> convert(CallSelfMember input) => {
         'video': input.video,
         'microphone': input.microphone,
         'speaker': input.speaker,

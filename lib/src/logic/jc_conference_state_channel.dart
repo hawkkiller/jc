@@ -29,14 +29,14 @@ base class JcConferenceStateChannelBase implements JcConferenceStateChannel {
         .whereType<List<Object>>()
         .asyncMap<List<Member>>(
           (event) => Stream.fromIterable(event)
-              .asyncMap((event) => Future.value($memberCodec.decode(event as Map<String, Object?>)))
+              .asyncMap((event) => Future.value($callMemberCodec.decode(event as Map<String, Object?>)))
               .toList(),
         );
 
     selfMember = _jcCallStateEventChannelSelf
         .receiveBroadcastStream()
         .whereType<Map<String, Object?>>()
-        .map($selfMemberCodec.decode);
+        .map($selfCallMemberCodec.decode);
   }
 
   late final EventChannel _jcCallStateEventChannelSelf;

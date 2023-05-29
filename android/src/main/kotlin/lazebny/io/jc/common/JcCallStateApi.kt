@@ -107,7 +107,6 @@ interface JcCallStateApi {
                     }
                 }
             )
-
             callStatus.setStreamHandler(
                 object : EventChannel.StreamHandler {
                     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
@@ -123,6 +122,5 @@ interface JcCallStateApi {
 
             Log.i("JcSdk", "The channels are set up, update data")
         }
-
     }
 }

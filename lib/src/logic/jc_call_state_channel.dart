@@ -37,13 +37,13 @@ base class JcCallStateChannelBase implements JcCallStateChannel {
         .receiveBroadcastStream()
         .whereType<Map<Object?, Object?>>()
         .map((event) => event.cast<String, Object?>())
-        .map($memberCodec.decode);
+        .map($callMemberCodec.decode);
 
     selfMember = _jcCallStateChannelSelf
         .receiveBroadcastStream()
         .whereType<Map<Object?, Object?>>()
         .map((event) => event.cast<String, Object?>())
-        .map($selfMemberCodec.decode);
+        .map($selfCallMemberCodec.decode);
     status = _jcCallStateChannelStatus
         .receiveBroadcastStream()
         .whereType<String>()
