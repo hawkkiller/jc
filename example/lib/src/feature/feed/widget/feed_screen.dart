@@ -10,30 +10,32 @@ class FeedScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Feed'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const CallScreen(),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const CallScreen(),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                  child: Text(
+                    'Call',
+                    style: TextStyle(fontSize: 18.0),
                   ),
-                );
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
-                child: Text(
-                  'Call',
-                  style: TextStyle(fontSize: 18.0),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

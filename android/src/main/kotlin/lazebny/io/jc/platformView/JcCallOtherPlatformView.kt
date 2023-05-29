@@ -9,21 +9,21 @@ import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
 import lazebny.io.jc.logic.JcWrapper.JCManager
 
-class JcCallSelfPlatformViewFactory :
+class JcCallOtherPlatformViewFactory :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
-        return JcCallSelfPlatformView(context!!)
+        return JcCallOtherPlatformView(context!!)
     }
 
 }
 
-class JcCallSelfPlatformView(context: Context) : PlatformView {
+class JcCallOtherPlatformView(context: Context) : PlatformView {
 
     private var view: View? = null
 
     init {
-        val canvas = JCManager.getInstance().call.activeCallItem.startSelfVideo(
+        val canvas = JCManager.getInstance().call.activeCallItem.startOtherVideo(
             JCMediaDevice.RENDER_FULL_SCREEN
         )
         this.view = canvas.videoView

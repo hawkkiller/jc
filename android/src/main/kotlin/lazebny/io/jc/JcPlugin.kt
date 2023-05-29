@@ -6,6 +6,7 @@ import lazebny.io.jc.common.JcCallStateApi
 import lazebny.io.jc.logic.JcApiImpl
 import lazebny.io.jc.logic.JcCallControllerApiImpl
 import lazebny.io.jc.logic.JcCallStateApiImpl
+import lazebny.io.jc.platformView.JcCallOtherPlatformViewFactory
 import lazebny.io.jc.platformView.JcCallSelfPlatformView
 import lazebny.io.jc.platformView.JcCallSelfPlatformViewFactory
 
@@ -22,6 +23,10 @@ class JcPlugin : FlutterPlugin {
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "JcCallSelfView",
             JcCallSelfPlatformViewFactory(),
+        )
+        flutterPluginBinding.platformViewRegistry.registerViewFactory(
+            "JcCallOtherView",
+            JcCallOtherPlatformViewFactory(),
         )
     }
 
