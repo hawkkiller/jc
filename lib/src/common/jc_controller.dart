@@ -1,3 +1,4 @@
+import 'package:jc/src/model/call_status.dart';
 import 'package:jc/src/model/member.dart';
 
 /// The base class for all controllers.
@@ -33,9 +34,16 @@ abstract interface class ConferenceController extends Controller {
 
   /// The stream of the self member in the conference.
   Stream<SelfMember> get selfMember;
+
+  Future<bool> joinConference(
+    String conferenceID, {
+    String password = '',
+  });
 }
 
 /// The controller for a call.
+/// 
+/// Only one call can be active at a time.
 abstract interface class CallController extends Controller {
   /// Terminates the call.
   Future<void> terminate();
@@ -45,4 +53,10 @@ abstract interface class CallController extends Controller {
 
   /// The stream of the self member in the call.
   Stream<SelfMember> get selfMember;
+
+  /// The stream of call status changes.
+  Stream<CallStatus> get status;
+
+  /// Starts the call.
+  Future<bool> call(String userID, {required bool video});
 }

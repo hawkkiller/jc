@@ -5,12 +5,18 @@ import lazebny.io.jc.common.JcCallStateApi
 import lazebny.io.jc.logic.JcWrapper.JCManager
 
 class JcCallStateApiImpl : JcCallStateApi {
+
+    private val stateOK: Boolean
+        get() = JCManager.getInstance().call.activeCallItem?.state == JCCall.STATE_OK
+                || JCManager.getInstance().call.activeCallItem?.state == JCCall.STATE_TALKING
+
     override fun microphone(): Boolean {
         return !(JCManager.getInstance().call.activeCallItem?.microphoneMute ?: true)
     }
 
     override fun video(): Boolean {
-        val uploadAudio = JCManager.getInstance().call.activeCallItem?.uploadVideoStreamSelf ?: false
+        val uploadAudio =
+            JCManager.getInstance().call.activeCallItem?.uploadVideoStreamSelf ?: false
         val isCameraOpen = JCManager.getInstance().mediaDevice.isCameraOpen
         return uploadAudio && isCameraOpen
     }
@@ -20,11 +26,16 @@ class JcCallStateApiImpl : JcCallStateApi {
     }
 
     override fun otherMicrophone(): Boolean {
-        return !(JCManager.getInstance().call.activeCallItem?.otherAudioInterrupt ?: true)
+        val audioInterrupt =
+            JCManager.getInstance().call.activeCallItem?.otherAudioInterrupt ?: true
+
+        return stateOK && !audioInterrupt
     }
 
     override fun otherVideo(): Boolean {
-        return JCManager.getInstance().call.activeCallItem?.uploadVideoStreamOther ?: false
+        val video = JCManager.getInstance().call.activeCallItem?.uploadVideoStreamOther ?: false
+
+        return stateOK && video
     }
 
     override fun callStatus(): String {

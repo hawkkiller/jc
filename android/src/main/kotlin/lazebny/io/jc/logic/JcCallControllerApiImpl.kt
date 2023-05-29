@@ -33,4 +33,24 @@ class JcCallControllerApiImpl : JcCallControllerApi {
             JCManager.getInstance().call.term(it, JCCall.REASON_NONE, "term")
         }
     }
+
+    override fun call(userID: String, video: Boolean): Boolean {
+        val param = JCCall.CallParam(
+            if (video) "video" else "audio",
+            "ticket",
+        )
+
+        JCManager.getInstance().call.updateMediaConfig(
+            JCCall.MediaConfig.generateByMode(JCCall.MediaConfig.MODE_IOT_SMALL)
+        )
+
+        return JCManager.getInstance().call.call(userID, video, param)
+    }
+    /*
+            val joinParam = JCMediaChannel.JoinParam()
+        joinParam.password = password
+        JCManager.getInstance().call.updateMediaConfig(JCCall.MediaConfig.generateByMode(JCCall.MediaConfig.MODE_720P))
+
+        return JCManager.getInstance().mediaChannel.join(conferenceID, joinParam)
+     */
 }

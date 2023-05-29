@@ -21,7 +21,7 @@ abstract class JcApi {
   bool login(String appAccountNumber, String name);
 
   /// Initializes the engine.
-  /// 
+  ///
   /// Returns `true` if the engine was initialized successfully, `false` otherwise.
   bool initialize(String appKey);
 }
@@ -42,6 +42,17 @@ abstract class JcCallControllerApi {
 
   /// Terminates the call.
   void terminate();
+
+  /// Initiates a call to the specified user.
+  ///
+  /// [userID] is the user ID of the user to call.
+  ///
+  /// [video] is whether the call should be a video call.
+  ///
+  /// Returns `true` if the call was initiated successfully, `false` otherwise.
+  ///
+  /// The client must be logged in before calling this method.
+  bool call(String userID, bool video);
 }
 
 @HostApi()
@@ -60,24 +71,7 @@ abstract class JcConferenceControllerApi {
 
   /// Leaves the conference.
   void leave();
-}
 
-@HostApi()
-abstract class JcCallApi {
-  /// Initiates a call to the specified user.
-  ///
-  /// [userID] is the user ID of the user to call.
-  ///
-  /// [video] is whether the call should be a video call.
-  ///
-  /// Returns `true` if the call was initiated successfully, `false` otherwise.
-  ///
-  /// The client must be logged in before calling this method.
-  bool call(String userID, bool video);
-}
-
-@HostApi()
-abstract class JcConferenceApi {
   /// Joins the specified conference.
   ///
   /// [conferenceID] is the ID of the conference to join.

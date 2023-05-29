@@ -1,4 +1,3 @@
-import 'package:jc/src/common/jc_controller.dart';
 import 'package:jc/src/logic/shared_platform.dart';
 import 'package:jc/src/model/client_state.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -32,34 +31,6 @@ abstract class JcPlatform extends PlatformInterface {
   ///
   /// Returns `true` if the login was started successfully, `false` otherwise.
   Future<bool> login(String appAccountNumber, String name);
-
-  /// Joins the specified conference.
-  ///
-  /// [conferenceID] is the ID of the conference to join.
-  ///
-  /// [password] is the password of the conference to join.
-  ///
-  /// Returns `true` if the conference was joined successfully, `false` otherwise.
-  ///
-  /// The client must be logged in before calling this method. See [login].
-  Future<ConferenceController> joinConference(
-    String conferenceID, {
-    String password = '',
-  });
-
-  /// Initiates a call to the specified user.
-  ///
-  /// [userID] is the user ID of the user to call.
-  ///
-  /// [video] is whether the call should be a video call.
-  ///
-  /// Returns [CallController] if the call was started successfully, throws [Exception] otherwise.
-  ///
-  /// The client must be logged in before calling this method. See [login].
-  Future<CallController> call(
-    String userID, {
-    bool video = false,
-  });
 
   /// Initializes the engine.
   ///

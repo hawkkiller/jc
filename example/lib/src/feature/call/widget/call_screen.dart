@@ -10,11 +10,12 @@ class CallScreen extends StatefulWidget {
 
 class _CallScreenState extends State<CallScreen> {
   late final TextEditingController _calleeIdController;
-  CallController? _callController;
+  late final CallController _callController;
 
   @override
   void initState() {
     _calleeIdController = TextEditingController();
+    _callController = JcCallController.create();
     super.initState();
   }
 
@@ -25,61 +26,64 @@ class _CallScreenState extends State<CallScreen> {
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              TextField(
-                controller: _calleeIdController,
-                decoration: InputDecoration(
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
+          child: StreamBuilder<CallStatus>(
+            stream: _callController.status,
+            builder: (context, snapshot) {
+              final status = snapshot.data ?? CallStatus.off;
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextField(
+                    controller: _calleeIdController,
+                    decoration: InputDecoration(
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        ),
+                      ),
+                      fillColor: Theme.of(context).colorScheme.primaryContainer,
+                      filled: true,
+                      labelText: 'Callee ID',
                     ),
                   ),
-                  fillColor: Theme.of(context).colorScheme.primaryContainer,
-                  filled: true,
-                  labelText: 'Callee ID',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32),
-                child: ValueListenableBuilder(
-                  valueListenable: _calleeIdController,
-                  builder: (context, v, __) {
-                    return TextButton.icon(
-                      onPressed: () async {
-                        _callController = await JcSdk.instance.call(
-                          userID: v.text,
-                          video: true,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32),
+                    child: ValueListenableBuilder(
+                      valueListenable: _calleeIdController,
+                      builder: (context, v, __) {
+                        return TextButton.icon(
+                          onPressed: () => _callController.call(v.text, video: true),
+                          icon: const Icon(Icons.call),
+                          label: Text('Call ${v.text}'),
                         );
-                        setState(() {});
                       },
-                      icon: const Icon(Icons.call),
-                      label: Text('Call ${v.text}'),
-                    );
-                  },
-                ),
-              ),
-              TextButton.icon(
-                onPressed: () async {
-                  await _callController?.terminate();
-                  setState(() {
-                    _callController = null;
-                  });
-                },
-                icon: const Icon(Icons.call_end),
-                label: const Text('Leave'),
-              ),
-              if (_callController != null) ...[
-                const Text('Realtime stats: '),
-                StreamBuilder<SelfMember>(
-                  stream: _callController!.selfMember,
-                  builder: (context, snapshot) {
-                    final data = snapshot.data;
-                    return Text('$data');
-                  },
-                ),
-              ]
-            ],
+                    ),
+                  ),
+                  if (status != CallStatus.off)
+                    TextButton.icon(
+                      onPressed: () => _callController.terminate(),
+                      icon: const Icon(Icons.call_end),
+                      label: const Text('Leave'),
+                    ),
+                  const Text('Realtime stats: '),
+                  Text('Status: $status'),
+                  StreamBuilder<SelfMember>(
+                    stream: _callController.selfMember,
+                    builder: (context, snapshot) {
+                      final data = snapshot.data;
+                      return Text('SelfMember: $data');
+                    },
+                  ),
+                  StreamBuilder<Member>(
+                    stream: _callController.otherMember,
+                    builder: (context, snapshot) {
+                      final data = snapshot.data;
+                      return Text('OtherMember: $data');
+                    },
+                  ),
+                ],
+              );
+            },
           ),
         ),
       );

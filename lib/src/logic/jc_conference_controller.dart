@@ -1,6 +1,4 @@
-import 'package:flutter/services.dart';
 import 'package:jc/src/common/jc_controller.dart';
-import 'package:jc/src/exception/jc_exception.dart';
 import 'package:jc/src/generated/messages.g.dart';
 import 'package:jc/src/logic/jc_conference_state_channel.dart';
 import 'package:jc/src/model/member.dart';
@@ -41,31 +39,38 @@ base class JcConferenceController implements ConferenceController {
   @override
   Future<void> switchCamera() => _jcConferenceControllerApi.switchCamera();
 
-  /// Creates a new [JcConferenceController]. 
-  /// 
-  /// Joins the conference with [conferenceID].
-  ///
-  /// [conferenceID] is the user ID to call.
-  ///
-  /// [password] is the password to use for the conference (omit for non-protected rooms).
-  ///
-  /// [jcConferenceApi] is the API to use for the call. This is only used for testing.
-  ///
-  /// Throws a [JcException] if the call could not be initiated.
-  static Future<JcConferenceController> create({
-    required String conferenceID,
-    String password='',
-    @visibleForTesting JcConferenceApi? jcConferenceApi,
-  }) async {
-    try {
-      final api = jcConferenceApi ?? JcConferenceApi();
-      final joinedConference = await api.joinConference(conferenceID, password);
-      if (!joinedConference) {
-        throw PlatformException(code: 'initiateCallFailed');
-      }
-    } on PlatformException catch (e, stackTrace) {
-      Error.throwWithStackTrace(JcPlatformException(e), stackTrace);
-    }
-    return JcConferenceController._();
-  }
+  @override
+  Future<bool> joinConference(
+    String conferenceID, {
+    String password = '',
+  }) =>
+      _jcConferenceControllerApi.joinConference(conferenceID, password);
+
+  // /// Creates a new [JcConferenceController].
+  // ///
+  // /// Joins the conference with [conferenceID].
+  // ///
+  // /// [conferenceID] is the user ID to call.
+  // ///
+  // /// [password] is the password to use for the conference (omit for non-protected rooms).
+  // ///
+  // /// [jcConferenceApi] is the API to use for the call. This is only used for testing.
+  // ///
+  // /// Throws a [JcException] if the call could not be initiated.
+  // static Future<JcConferenceController> create({
+  //   required String conferenceID,
+  //   String password='',
+  //   @visibleForTesting JcConferenceApi? jcConferenceApi,
+  // }) async {
+  //   try {
+  //     final api = jcConferenceApi ?? JcConferenceApi();
+  //     final joinedConference = await api.joinConference(conferenceID, password);
+  //     if (!joinedConference) {
+  //       throw PlatformException(code: 'initiateCallFailed');
+  //     }
+  //   } on PlatformException catch (e, stackTrace) {
+  //     Error.throwWithStackTrace(JcPlatformException(e), stackTrace);
+  //   }
+  //   return JcConferenceController._();
+  // }
 }
