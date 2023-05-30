@@ -11,11 +11,6 @@ class JcCallControllerApiImpl : JcCallControllerApi {
     override fun enableMicrophone(value: Boolean) {
         JCManager.getInstance().call.activeCallItem?.let {
             JCManager.getInstance().call.muteMicrophone(it, !value)
-            if (value) {
-                JCManager.getInstance().mediaDevice.startAudio()
-            } else {
-                JCManager.getInstance().mediaDevice.stopAudio()
-            }
             EventBus.getDefault().post(JCEvent(JCEvent.EventType.CALL_UI))
         }
     }
@@ -52,6 +47,11 @@ class JcCallControllerApiImpl : JcCallControllerApi {
             JCCall.MediaConfig.generateByMode(JCCall.MediaConfig.MODE_IOT_LARGE)
         )
 
-        return JCManager.getInstance().call.call(userID, video, param)
+        val res = JCManager.getInstance().call.call(userID, video, param)
+        if (res) {
+            JCManager.getInstance().mediaDevice.startAudio()
+        }
+
+        return res
     }
 }

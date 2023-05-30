@@ -72,7 +72,7 @@ class _CallScreenState extends State<CallScreen> {
                                 );
                               },
                             ),
-                            if (status != CallStatus.off) ...[
+                            if (status != null) ...[
                               Wrap(
                                 children: [
                                   TextButton.icon(
@@ -122,12 +122,6 @@ class _CallScreenState extends State<CallScreen> {
                                     width: 100,
                                     child: JcCallSelfView(),
                                   ),
-                                // if (otherMember != null && otherMember.video)
-                                //   const SizedBox(
-                                //     height: 200,
-                                //     width: 100,
-                                //     child: JCCallOtherView(),
-                                //   ),
                               ],
                             ),
                             if (otherMember != null && otherMember.video)

@@ -3,12 +3,12 @@ import UIKit
 
 public class JcPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "jc", binaryMessenger: registrar.messenger())
-    let instance = JcPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
+    let jcApi = JcApiImpl()
+    let jcCallStateApi = JcCallStateApiImpl()
+    let jcCallControllerApi = JcCallControllerApiImpl()
 
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-    result("iOS " + UIDevice.current.systemVersion)
+    JcApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcApi)
+    JcCallControllerApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcCallControllerApi)
+    JcCallStateApiSetup.setUp(binaryMessenger: registrar.messenger(), stateApi: jcCallStateApi)
   }
 }

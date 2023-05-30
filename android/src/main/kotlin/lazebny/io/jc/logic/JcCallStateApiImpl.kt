@@ -12,15 +12,14 @@ class JcCallStateApiImpl : JcCallStateApi {
 
     override fun microphone(): Boolean {
         val microphoneMute = JCManager.getInstance().call.activeCallItem?.microphoneMute ?: true
-        val audioStarted = JCManager.getInstance().mediaDevice.isAudioStart
-        return audioStarted && !microphoneMute
+        return !microphoneMute
     }
 
     override fun video(): Boolean {
-        val uploadAudio =
+        val uploadVideo =
             JCManager.getInstance().call.activeCallItem?.uploadVideoStreamSelf ?: false
         val isCameraOpen = JCManager.getInstance().mediaDevice.isCameraOpen
-        return uploadAudio && isCameraOpen
+        return uploadVideo && isCameraOpen
     }
 
     override fun speaker(): Boolean {
