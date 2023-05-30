@@ -72,7 +72,7 @@ class _CallScreenState extends State<CallScreen> {
                                 );
                               },
                             ),
-                            if (status != null) ...[
+                            if (status != CallStatus.off) ...[
                               Wrap(
                                 children: [
                                   TextButton.icon(
