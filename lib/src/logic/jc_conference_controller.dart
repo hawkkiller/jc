@@ -1,12 +1,13 @@
 import 'package:jc/src/common/jc_controller.dart';
 import 'package:jc/src/generated/messages.g.dart';
 import 'package:jc/src/logic/jc_conference_state_channel.dart';
+import 'package:jc/src/model/conference_status.dart';
 import 'package:jc/src/model/member.dart';
 import 'package:meta/meta.dart';
 
 /// The base implementation of [ConferenceController] for conference calls.
 base class JcConferenceController implements ConferenceController {
-  JcConferenceController._({
+  JcConferenceController.create({
     @visibleForTesting JcConferenceControllerApi? jcConferenceControllerApi,
     @visibleForTesting JcConferenceStateChannel? jcConferenceStateChannel,
   })  : _jcConferenceControllerApi = jcConferenceControllerApi ?? JcConferenceControllerApi(),
@@ -31,10 +32,10 @@ base class JcConferenceController implements ConferenceController {
   Future<void> leave() => _jcConferenceControllerApi.leave();
 
   @override
-  Stream<List<Member>> get members => _jcConferenceStateChannel.members;
+  Stream<List<ConferenceMember>> get members => _jcConferenceStateChannel.members;
 
   @override
-  Stream<SelfMember> get selfMember => _jcConferenceStateChannel.selfMember;
+  Stream<ConferenceSelfMember> get selfMember => _jcConferenceStateChannel.selfMember;
 
   @override
   Future<void> switchCamera() => _jcConferenceControllerApi.switchCamera();
@@ -43,34 +44,14 @@ base class JcConferenceController implements ConferenceController {
   Future<bool> joinConference(
     String conferenceID, {
     String password = '',
-  }) =>
-      _jcConferenceControllerApi.joinConference(conferenceID, password);
+  }) async {
+    final res = await _jcConferenceControllerApi.joinConference(conferenceID, password);
+    if (res) {
+      await status.firstWhere((status) => status != ConferenceStatus.off);
+    }
+    return res;
+  }
 
-  // /// Creates a new [JcConferenceController].
-  // ///
-  // /// Joins the conference with [conferenceID].
-  // ///
-  // /// [conferenceID] is the user ID to call.
-  // ///
-  // /// [password] is the password to use for the conference (omit for non-protected rooms).
-  // ///
-  // /// [jcConferenceApi] is the API to use for the call. This is only used for testing.
-  // ///
-  // /// Throws a [JcException] if the call could not be initiated.
-  // static Future<JcConferenceController> create({
-  //   required String conferenceID,
-  //   String password='',
-  //   @visibleForTesting JcConferenceApi? jcConferenceApi,
-  // }) async {
-  //   try {
-  //     final api = jcConferenceApi ?? JcConferenceApi();
-  //     final joinedConference = await api.joinConference(conferenceID, password);
-  //     if (!joinedConference) {
-  //       throw PlatformException(code: 'initiateCallFailed');
-  //     }
-  //   } on PlatformException catch (e, stackTrace) {
-  //     Error.throwWithStackTrace(JcPlatformException(e), stackTrace);
-  //   }
-  //   return JcConferenceController._();
-  // }
+  @override
+  Stream<ConferenceStatus> get status => _jcConferenceStateChannel.status;
 }

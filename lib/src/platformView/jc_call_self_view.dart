@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-class JCCallSelfView extends StatelessWidget {
-  const JCCallSelfView({super.key});
+class JcCallSelfView extends StatelessWidget {
+  const JcCallSelfView({super.key});
 
   @override
   Widget build(BuildContext context) {

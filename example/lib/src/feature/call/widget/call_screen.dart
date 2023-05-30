@@ -112,13 +112,7 @@ class _CallScreenState extends State<CallScreen> {
                             const Text('Realtime stats: '),
                             Text('Status: $status'),
                             Text('SelfMember: $selfMember'),
-                            StreamBuilder<Member>(
-                              stream: _callController.otherMember,
-                              builder: (context, snapshot) {
-                                final data = snapshot.data;
-                                return Text('OtherMember: $data');
-                              },
-                            ),
+                            Text('OtherMember: $otherMember'),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -126,7 +120,7 @@ class _CallScreenState extends State<CallScreen> {
                                   const SizedBox(
                                     height: 200,
                                     width: 100,
-                                    child: JCCallSelfView(),
+                                    child: JcCallSelfView(),
                                   ),
                                 if (otherMember != null && otherMember.video)
                                   const SizedBox(

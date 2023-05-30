@@ -13,12 +13,11 @@ class JcCallSelfPlatformViewFactory :
     PlatformViewFactory(StandardMessageCodec.INSTANCE) {
 
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView {
-        return JcCallSelfPlatformView(context!!)
+        return JcCallSelfPlatformView()
     }
-
 }
 
-class JcCallSelfPlatformView(context: Context) : PlatformView {
+class JcCallSelfPlatformView : PlatformView {
 
     private var view: View? = null
 
@@ -28,7 +27,6 @@ class JcCallSelfPlatformView(context: Context) : PlatformView {
         )
         this.view = canvas.videoView
     }
-
 
     override fun getView(): View? {
         return this.view

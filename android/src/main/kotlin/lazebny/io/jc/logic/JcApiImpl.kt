@@ -14,6 +14,7 @@ class JcApiImpl(private val context: Context) : JcApi {
 
     override fun initialize(appKey: String): Boolean {
         JCManager.sAppkey = appKey
-        return JCManager.getInstance().initialize(context)
+        val init = JCManager.getInstance().initialize(context)
+        return init
     }
 }

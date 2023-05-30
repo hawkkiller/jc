@@ -7,19 +7,24 @@ import lazebny.io.jc.logic.JcWrapper.JCEvent.JCEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-interface JcCallStateApi {
+interface JcConferenceStateApi {
     fun microphone(): Boolean
+
     fun video(): Boolean
+
     fun speaker(): Boolean
-    fun otherMicrophone(): Boolean
-    fun otherVideo(): Boolean
-    fun callStatus(): String
+
+    fun conferenceStatus(): String
+
+    fun uid(): String
+
+    fun members(): List<Map<String, *>>
 
     companion object {
         private var selfMemberSink: EventChannel.EventSink? = null
-        private var otherMemberSink: EventChannel.EventSink? = null
-        private var callStatusSink: EventChannel.EventSink? = null
-        private var stateApi: JcCallStateApi? = null
+        private var membersSink: EventChannel.EventSink? = null
+        private var conferenceStatusSink: EventChannel.EventSink? = null
+        private var stateApi: JcConferenceStateApi? = null
 
         private fun sendSelfMember() {
             val api = stateApi ?: return
@@ -27,59 +32,60 @@ interface JcCallStateApi {
                 "video" to api.video(),
                 "microphone" to api.microphone(),
                 "speaker" to api.speaker(),
+                "uid" to api.uid(),
             )
             selfMemberSink?.success(map)
         }
 
-        private fun sendOtherMember() {
+        private fun sendMembers() {
             val api = stateApi ?: return
-            val map = mapOf<String?, Any>(
-                "video" to api.otherVideo(),
-                "microphone" to api.otherMicrophone(),
-            )
-            otherMemberSink?.success(map)
+            val members = api.members()
+            membersSink?.success(members)
         }
 
-        private fun sendCallStatus() {
+        private fun sendConferenceStatus() {
             val api = stateApi ?: return
-            callStatusSink?.success(api.callStatus())
+            conferenceStatusSink?.success(api.conferenceStatus())
         }
 
         @Subscribe
         fun onEvent(event: JCEvent) {
-            print("JcCallStateApi onEvent")
-            val api = stateApi ?: return
             // do not trigger updates on log events
-            val triggerEvents = listOf(
-                JCEvent.EventType.CALL_UI,
-                JCEvent.EventType.CALL_ADD,
-                JCEvent.EventType.CALL_REMOVE,
-                JCEvent.EventType.CALL_UPDATE,
-                JCEvent.EventType.CAMERA_UPDATE,
-            )
-            val contains = triggerEvents.contains(event.eventType)
-            if (!contains) return
+//            val triggerEvents = listOf(
+//                JCEvent.EventType.CONFERENCE_JOIN,
+//                JCEvent.EventType.CONFERENCE_LEAVE,
+//                JCEvent.EventType.CONFERENCE_QUERY,
+//                JCEvent.EventType.CONFERENCE_STOP,
+//                JCEvent.EventType.CONFERENCE_PARTP_JOIN,
+//                JCEvent.EventType.CONFERENCE_PARTP_LEAVE,
+//                JCEvent.EventType.CONFERENCE_PARTP_UPDATE,
+//                JCEvent.EventType.CONFERENCE_PROP_CHANGE,
+//                JCEvent.EventType.CONFERENCE_MESSAGE_RECEIVED,
+//                JCEvent.EventType.CAMERA_UPDATE,
+//            )
+//            val contains = triggerEvents.contains(event.eventType)
+//            if (!contains) return
 
             sendSelfMember()
 
-            sendOtherMember()
+            sendMembers()
 
-            sendCallStatus()
+            sendConferenceStatus()
         }
 
-        fun setUp(binaryMessenger: BinaryMessenger, stateApi: JcCallStateApi?) {
+        fun setUp(binaryMessenger: BinaryMessenger, stateApi: JcConferenceStateApi?) {
             val selfMember =
-                EventChannel(binaryMessenger, "lazebny.io.jc/jc_call_state_channel/self")
-            val otherMember =
-                EventChannel(binaryMessenger, "lazebny.io.jc/jc_call_state_channel/other")
-            val callStatus =
-                EventChannel(binaryMessenger, "lazebny.io.jc/jc_call_state_channel/status")
+                EventChannel(binaryMessenger, "lazebny.io.jc/jc_conference_state_channel/self")
+            val members =
+                EventChannel(binaryMessenger, "lazebny.io.jc/jc_conference_state_channel/members")
+            val conferenceStatus =
+                EventChannel(binaryMessenger, "lazebny.io.jc/jc_conference_state_channel/status")
             this.stateApi = stateApi
             if (stateApi == null) {
                 EventBus.getDefault().unregister(this)
                 selfMember.setStreamHandler(null)
-                otherMember.setStreamHandler(null)
-                callStatus.setStreamHandler(null)
+                members.setStreamHandler(null)
+                conferenceStatus.setStreamHandler(null)
                 return
             }
 
@@ -96,27 +102,27 @@ interface JcCallStateApi {
                     }
                 }
             )
-            otherMember.setStreamHandler(
+            members.setStreamHandler(
                 object : EventChannel.StreamHandler {
                     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-                        otherMemberSink = events
-                        sendOtherMember()
+                        membersSink = events
+                        sendMembers()
                     }
 
                     override fun onCancel(arguments: Any?) {
-                        otherMemberSink = null
+                        membersSink = null
                     }
                 }
             )
-            callStatus.setStreamHandler(
+            conferenceStatus.setStreamHandler(
                 object : EventChannel.StreamHandler {
                     override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
-                        callStatusSink = events
-                        sendCallStatus()
+                        conferenceStatusSink = events
+                        sendConferenceStatus()
                     }
 
                     override fun onCancel(arguments: Any?) {
-                        callStatusSink = null
+                        conferenceStatusSink = null
                     }
                 }
             )

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/services.dart';
 import 'package:jc/src/logic/member_codec.dart';
+import 'package:jc/src/model/conference_status.dart';
 import 'package:jc/src/model/member.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -9,42 +12,66 @@ abstract interface class JcConferenceStateChannel {
   /// This stream emits a list of members every time the list or properties changes.
   ///
   /// **Note:** This stream does not contain self member.
-  Stream<List<Member>> get members;
+  Stream<List<ConferenceMember>> get members;
 
   /// Stream of self member in the conference.
-  Stream<SelfMember> get selfMember;
+  ///
+  /// This stream emits a new model of member every time the status or properties changes.
+    Stream<ConferenceSelfMember> get selfMember;
+
+  /// Stream of conference status changes.
+  ///
+  /// This stream emits a new model of conference status every time the status changes.
+  Stream<ConferenceStatus> get status;
 }
 
 base class JcConferenceStateChannelBase implements JcConferenceStateChannel {
   JcConferenceStateChannelBase() {
-    _jcCallStateEventChannelSelf = const EventChannel(
-      'lazebny.io.jc/jc_call_state_channel',
+    _jcConferenceStateEventChannelSelf = const EventChannel(
+      'lazebny.io.jc/jc_conference_state_channel/self',
     );
-    _jcCallStateEventChannelOther = const EventChannel(
-      'lazebny.io.jc/jc_conference_state_channel',
+    _jcConferenceStateEventChannelOther = const EventChannel(
+      'lazebny.io.jc/jc_conference_state_channel/members',
+    );
+    _jcConferenceStateEventChannelStatus = const EventChannel(
+      'lazebny.io.jc/jc_conference_state_channel/status',
     );
 
-    members = _jcCallStateEventChannelOther
+    members = _jcConferenceStateEventChannelOther
         .receiveBroadcastStream()
         .whereType<List<Object>>()
-        .asyncMap<List<Member>>(
+        .asyncMap<List<ConferenceMember>>(
           (event) => Stream.fromIterable(event)
-              .asyncMap((event) => Future.value($callMemberCodec.decode(event as Map<String, Object?>)))
+              .asyncMap(
+                (event) => Future.value(
+                  $conferenceMemberCodec.decode(event as Map<String, Object?>),
+                ),
+              )
               .toList(),
         );
 
-    selfMember = _jcCallStateEventChannelSelf
+    selfMember = _jcConferenceStateEventChannelSelf
         .receiveBroadcastStream()
-        .whereType<Map<String, Object?>>()
-        .map($selfCallMemberCodec.decode);
+        .whereType<Map<Object?, Object?>>()
+        .map((event) => event.cast<String, Object?>())
+        .map($selfConferenceMemberCodec.decode);
+
+    status = _jcConferenceStateEventChannelStatus
+        .receiveBroadcastStream()
+        .whereType<String>()
+        .map(ConferenceStatus.fromString);
   }
 
-  late final EventChannel _jcCallStateEventChannelSelf;
-  late final EventChannel _jcCallStateEventChannelOther;
+  late final EventChannel _jcConferenceStateEventChannelSelf;
+  late final EventChannel _jcConferenceStateEventChannelOther;
+  late final EventChannel _jcConferenceStateEventChannelStatus;
 
   @override
-  late final Stream<List<Member>> members;
+  late final Stream<List<ConferenceMember>> members;
 
   @override
-  late final Stream<SelfMember> selfMember;
+  late final Stream<ConferenceSelfMember> selfMember;
+
+  @override
+  late final Stream<ConferenceStatus> status;
 }

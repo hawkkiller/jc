@@ -49,15 +49,11 @@ base class ConferenceMember extends Member {
   const ConferenceMember({
     required this.video,
     required this.microphone,
-    required this.conferenceId,
-    required this.memberId,
+    required this.uid,
   });
 
-  /// The conference | call ID.
-  final String conferenceId;
-
-  /// The member ID.
-  final String memberId;
+  /// The user ID.
+  final String uid;
 
   @override
   final bool video;
@@ -67,21 +63,20 @@ base class ConferenceMember extends Member {
 
   @override
   String toString() =>
-      'ConferenceMember(video: $video, microphone: $microphone, conferenceId: $conferenceId, memberId: $memberId)';
+      'ConferenceMember(video: $video, microphone: $microphone, uid: $uid)';
 }
 
 base class ConferenceSelfMember extends ConferenceMember with SelfMember {
   const ConferenceSelfMember({
     required super.video,
     required super.microphone,
-    required super.conferenceId,
-    required super.memberId,
+    required super.uid,
     required this.speaker,
   });
 
   @override
   String toString() =>
-      'ConferenceSelfMember(video: $video, microphone: $microphone, speaker: $speaker, conferenceId: $conferenceId, memberId: $memberId)';
+      'ConferenceSelfMember(video: $video, microphone: $microphone, speaker: $speaker, uid: $uid)';
 
   @override
   final bool speaker;

@@ -54,11 +54,4 @@ class JcCallControllerApiImpl : JcCallControllerApi {
 
         return JCManager.getInstance().call.call(userID, video, param)
     }
-    /*
-            val joinParam = JCMediaChannel.JoinParam()
-        joinParam.password = password
-        JCManager.getInstance().call.updateMediaConfig(JCCall.MediaConfig.generateByMode(JCCall.MediaConfig.MODE_720P))
-
-        return JCManager.getInstance().mediaChannel.join(conferenceID, joinParam)
-     */
 }

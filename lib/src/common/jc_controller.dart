@@ -1,4 +1,5 @@
 import 'package:jc/src/model/call_status.dart';
+import 'package:jc/src/model/conference_status.dart';
 import 'package:jc/src/model/member.dart';
 
 /// The base class for all controllers.
@@ -30,10 +31,19 @@ abstract interface class ConferenceController extends Controller {
   Future<void> leave();
 
   /// The stream of the other members in the conference.
-  Stream<List<Member>> get members;
+  Stream<List<ConferenceMember>> get members;
 
   /// The stream of the self member in the conference.
-  Stream<SelfMember> get selfMember;
+  Stream<ConferenceSelfMember> get selfMember;
+
+  /// The stream of conference status changes.
+  ///
+  /// The status is [ConferenceStatus.off] when the conference is not joined.
+  ///
+  /// The status is [ConferenceStatus.on] when the conference is joined.
+  ///
+  /// The status is [ConferenceStatus.waiting] when the conference is joined but waiting for other members.
+  Stream<ConferenceStatus> get status;
 
   Future<bool> joinConference(
     String conferenceID, {
@@ -42,7 +52,7 @@ abstract interface class ConferenceController extends Controller {
 }
 
 /// The controller for a call.
-/// 
+///
 /// Only one call can be active at a time.
 abstract interface class CallController extends Controller {
   /// Terminates the call.

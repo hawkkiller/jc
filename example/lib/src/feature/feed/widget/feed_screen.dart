@@ -1,4 +1,5 @@
 import 'package:example/src/feature/call/widget/call_screen.dart';
+import 'package:example/src/feature/conference/widget/conference_screen.dart';
 import 'package:flutter/material.dart';
 
 class FeedScreen extends StatelessWidget {
@@ -29,6 +30,25 @@ class FeedScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
                   child: Text(
                     'Call',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const ConferenceScreen(),
+                    ),
+                  );
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 32.0),
+                  child: Text(
+                    'Conference',
                     style: TextStyle(fontSize: 18.0),
                   ),
                 ),
