@@ -50,7 +50,7 @@ class JcConferenceStateApiImpl : JcConferenceStateApi {
             mapOf(
                 "uid" to it.userId,
                 "name" to it.displayName,
-                "audio" to it.isAudio,
+                "microphone" to it.isAudio,
                 "video" to it.isVideo,
             )
         }

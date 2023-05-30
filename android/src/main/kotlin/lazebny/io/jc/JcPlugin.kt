@@ -35,15 +35,15 @@ class JcPlugin : FlutterPlugin {
         )
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "JcCallSelfView",
-            JcCallSelfPlatformViewFactory(),
+            JcCallSelfPlatformViewFactory(flutterPluginBinding.binaryMessenger),
         )
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "JcCallOtherView",
-            JcCallOtherPlatformViewFactory(),
+            JcCallOtherPlatformViewFactory(flutterPluginBinding.binaryMessenger),
         )
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "JcConferenceView",
-            JcConferencePlatformViewFactory(),
+            JcConferencePlatformViewFactory(flutterPluginBinding.binaryMessenger),
         )
     }
 

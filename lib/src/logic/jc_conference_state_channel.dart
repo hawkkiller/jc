@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/services.dart';
 import 'package:jc/src/logic/member_codec.dart';
 import 'package:jc/src/model/conference_status.dart';
@@ -15,7 +17,7 @@ abstract interface class JcConferenceStateChannel {
   /// Stream of self member in the conference.
   ///
   /// This stream emits a new model of member every time the status or properties changes.
-    Stream<ConferenceSelfMember> get selfMember;
+  Stream<ConferenceSelfMember> get selfMember;
 
   /// Stream of conference status changes.
   ///
@@ -37,16 +39,21 @@ base class JcConferenceStateChannelBase implements JcConferenceStateChannel {
 
     members = _jcConferenceStateEventChannelOther
         .receiveBroadcastStream()
-        .whereType<List<Object>>()
+        .whereType<List<Object?>>()
         .asyncMap<List<ConferenceMember>>(
-          (event) => Stream.fromIterable(event)
-              .asyncMap(
-                (event) => Future.value(
-                  $conferenceMemberCodec.decode(event as Map<String, Object?>),
-                ),
-              )
-              .toList(),
-        );
+          (event) => Stream.fromIterable(event).asyncMap(
+            (event) {
+              final map = event! as Map<Object?, Object?>;
+              return Future.value(
+                $conferenceMemberCodec.decode(map.cast()),
+              );
+            },
+          ).toList(),
+        )
+        .handleError((dynamic err) {
+      log('Error in members stream: $err');
+      return const <ConferenceMember>[];
+    });
 
     selfMember = _jcConferenceStateEventChannelSelf
         .receiveBroadcastStream()

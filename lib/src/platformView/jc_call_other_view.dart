@@ -1,23 +1,45 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:jc/src/logic/jc_view_controller.dart';
 
-class JCCallOtherView extends StatelessWidget {
+class JCCallOtherView extends StatefulWidget {
   const JCCallOtherView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      return const AndroidView(
-        viewType: 'JcCallOtherView',
-        layoutDirection: TextDirection.ltr,
+  State<JCCallOtherView> createState() => _JCCallOtherViewState();
+}
+
+class _JCCallOtherViewState extends State<JCCallOtherView> {
+  JcViewController? _controller;
+
+  @override
+  Widget build(BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) {
+          _controller?.setLayoutParams(
+            width: constraints.maxWidth,
+            height: constraints.maxHeight,
+          );
+          if (Platform.isAndroid) {
+            return AndroidView(
+              key: const GlobalObjectKey('JcCallOtherView'),
+              viewType: 'JcCallOtherView',
+              layoutDirection: TextDirection.ltr,
+              onPlatformViewCreated: (id) {
+                _controller = JcViewController.create(viewId: id);
+              },
+            );
+          }
+          if (Platform.isIOS) {
+            return UiKitView(
+              viewType: 'JcCallOtherView',
+              key: const GlobalObjectKey('JcCallOtherView'),
+              onPlatformViewCreated: (id) {
+                _controller = JcViewController.create(viewId: id);
+              },
+            );
+          }
+          throw UnsupportedError('Unsupported platform');
+        },
       );
-    }
-    if (Platform.isIOS) {
-      return const UiKitView(
-        viewType: 'JcCallOtherView',
-      );
-    }
-    throw UnsupportedError('Unsupported platform');
-  }
 }

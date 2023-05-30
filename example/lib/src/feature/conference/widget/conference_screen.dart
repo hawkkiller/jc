@@ -41,8 +41,7 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                     stream: _conferenceController.members,
                     builder: (context, snapshot) {
                       final members = snapshot.data;
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      return ListView(
                         children: [
                           TextField(
                             controller: _calleeIdController,
@@ -117,11 +116,13 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                           Text('SelfMember: $selfMember'),
                           Text('Members: $members'),
                           if (selfMember != null && selfMember.video)
-                            SizedBox(
-                              height: 200,
-                              width: 100,
-                              child: JCConferenceView(
-                                uid: selfMember.uid,
+                            Center(
+                              child: SizedBox(
+                                height: 200,
+                                width: 100,
+                                child: JCConferenceView(
+                                  uid: selfMember.uid,
+                                ),
                               ),
                             ),
                           SizedBox(
@@ -132,14 +133,16 @@ class _ConferenceScreenState extends State<ConferenceScreen> {
                               ),
                               itemBuilder: (context, index) {
                                 final member = members![index];
-                                return SizedBox(
-                                  height: 200,
-                                  width: 100,
-                                  child: member.video
-                                      ? JCConferenceView(
-                                          uid: member.uid,
-                                        )
-                                      : null,
+                                return Center(
+                                  child: SizedBox(
+                                    height: 200,
+                                    width: 100,
+                                    child: member.video
+                                        ? JCConferenceView(
+                                            uid: member.uid,
+                                          )
+                                        : null,
+                                  ),
                                 );
                               },
                               itemCount: members?.length ?? 0,

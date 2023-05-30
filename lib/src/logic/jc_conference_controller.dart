@@ -1,4 +1,4 @@
-import 'package:jc/src/common/jc_controller.dart';
+import 'package:jc/src/common/controller.dart';
 import 'package:jc/src/generated/messages.g.dart';
 import 'package:jc/src/logic/jc_conference_state_channel.dart';
 import 'package:jc/src/model/conference_status.dart';
