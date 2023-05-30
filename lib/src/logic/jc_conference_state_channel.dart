@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/services.dart';
 import 'package:jc/src/logic/member_codec.dart';
 import 'package:jc/src/model/conference_status.dart';
