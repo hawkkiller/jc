@@ -20,8 +20,8 @@ class _JCConferenceViewState extends State<JCConferenceView> {
   Widget build(BuildContext context) => LayoutBuilder(
         builder: (context, constraints) {
           _controller?.setLayoutParams(
-            width: 100,
-            height: 200,
+            width: constraints.maxWidth,
+            height: constraints.maxHeight,
           );
           if (Platform.isAndroid) {
             return AndroidView(

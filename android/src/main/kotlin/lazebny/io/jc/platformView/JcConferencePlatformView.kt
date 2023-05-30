@@ -32,14 +32,15 @@ class JcConferencePlatformView(
     private var view: FrameLayout
 
     init {
-        view = FrameLayout(context)
+
         val participant =
             JCManager.getInstance().mediaChannel.participants.find { it.userId == uid }
         val canvas = participant?.startVideo(
             JCMediaDevice.RENDER_FULL_SCREEN,
             JCMediaChannel.PICTURESIZE_MIN
         )
-        canvas!!.videoView.let {
+        view = FrameLayout(canvas!!.videoView.context)
+        canvas.videoView.let {
             val parent = it.parent as ViewGroup?
             parent?.removeView(it)
         }
@@ -57,7 +58,6 @@ class JcConferencePlatformView(
 
     override fun dispose() {
         view.removeAllViews()
-
         JcViewController.setUp(messenger, viewId, null)
     }
 

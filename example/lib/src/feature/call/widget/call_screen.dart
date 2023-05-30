@@ -31,13 +31,13 @@ class _CallScreenState extends State<CallScreen> {
             builder: (context, snapshot) {
               final status = snapshot.data ?? CallStatus.off;
               return StreamBuilder<SelfMember>(
-                  stream: _callController.selfMember,
-                  builder: (context, snapshot) {
-                    final selfMember = snapshot.data;
-                    final mic = selfMember?.microphone ?? false;
-                    final video = selfMember?.video ?? false;
-                    final speaker = selfMember?.speaker ?? false;
-                    return StreamBuilder<Member>(
+                stream: _callController.selfMember,
+                builder: (context, snapshot) {
+                  final selfMember = snapshot.data;
+                  final mic = selfMember?.microphone ?? false;
+                  final video = selfMember?.video ?? false;
+                  final speaker = selfMember?.speaker ?? false;
+                  return StreamBuilder<Member>(
                       stream: _callController.otherMember,
                       builder: (context, snapshot) {
                         final otherMember = snapshot.data;
@@ -122,19 +122,25 @@ class _CallScreenState extends State<CallScreen> {
                                     width: 100,
                                     child: JcCallSelfView(),
                                   ),
-                                if (otherMember != null && otherMember.video)
-                                  const SizedBox(
-                                    height: 200,
-                                    width: 100,
-                                    child: JCCallOtherView(),
-                                  ),
+                                // if (otherMember != null && otherMember.video)
+                                //   const SizedBox(
+                                //     height: 200,
+                                //     width: 100,
+                                //     child: JCCallOtherView(),
+                                //   ),
                               ],
                             ),
+                            if (otherMember != null && otherMember.video)
+                              const SizedBox(
+                                height: 200,
+                                width: 100,
+                                child: JCCallOtherView(),
+                              ),
                           ],
                         );
-                      }
-                    );
-                  });
+                      });
+                },
+              );
             },
           ),
         ),

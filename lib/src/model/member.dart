@@ -28,7 +28,7 @@ base class CallMember extends Member {
   final bool video;
 
   @override
-  String toString() => 'CallSelfMember(video: $video, microphone: $microphone)';
+  String toString() => 'CallMember(video: $video, microphone: $microphone)';
 }
 
 base class CallSelfMember extends CallMember with SelfMember {

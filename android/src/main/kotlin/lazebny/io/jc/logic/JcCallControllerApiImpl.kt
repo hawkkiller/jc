@@ -49,7 +49,7 @@ class JcCallControllerApiImpl : JcCallControllerApi {
         )
 
         JCManager.getInstance().call.updateMediaConfig(
-            JCCall.MediaConfig.generateByMode(JCCall.MediaConfig.MODE_IOT_SMALL)
+            JCCall.MediaConfig.generateByMode(JCCall.MediaConfig.MODE_IOT_LARGE)
         )
 
         return JCManager.getInstance().call.call(userID, video, param)
