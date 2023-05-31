@@ -5,15 +5,15 @@ import lazebny.io.jc.logic.JcWrapper.JCManager
 
 class JcConferenceStateApiImpl : JcConferenceStateApi {
     override fun microphone(): Boolean {
-        val uploadLocalAudio = JCManager.getInstance().mediaChannel.uploadLocalAudio
+        val isAudio = JCManager.getInstance().mediaChannel.selfParticipant?.isAudio ?: false
         val isAudioStart = JCManager.getInstance().mediaDevice.isAudioStart
-        return uploadLocalAudio && isAudioStart
+        return isAudio && isAudioStart
     }
 
     override fun video(): Boolean {
-        val uploadLocalAudio = JCManager.getInstance().mediaChannel.uploadLocalVideo
+        val isVideo = JCManager.getInstance().mediaChannel.selfParticipant?.isVideo ?: false
         val isCameraOpen = JCManager.getInstance().mediaDevice.isCameraOpen
-        return uploadLocalAudio && isCameraOpen
+        return isVideo && isCameraOpen
     }
 
     override fun speaker(): Boolean {

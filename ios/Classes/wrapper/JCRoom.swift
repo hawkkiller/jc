@@ -10,30 +10,8 @@ import UIKit
 import JCSDKOC
 
 @objcMembers
-class JCRoom: NSObject, JCCallCallback {
-    func onCallItemAdd(_ item: JCCallItem) {
-        JcCallStateApiSetup.onEvent()
-    }
-    
-    func onCallItemRemove(_ item: JCCallItem, reason: JCCallReason, description: String?) {
-        JcCallStateApiSetup.onEvent()
-    }
-    
-    func onCallItemUpdate(_ item: JCCallItem, changeParam: JCCallChangeParam?) {
-        JcCallStateApiSetup.onEvent()
-    }
-    
-    func onMessageReceive(_ item: JCCallItem, type: String, content: String) {
-        
-    }
-    
-    func onMissedCallItem(_ item: JCCallItem) {
-        JcCallStateApiSetup.onEvent()
-    }
-    
-    func onDtmfReceived(_ item: JCCallItem, value: JCCallDtmf) {
-        
-    }
+class JCRoom: NSObject {
+
     
     // 通过关键字 static 来保存实例引用
     private static let instance = JCRoom()
@@ -119,18 +97,49 @@ class JCRoom: NSObject, JCCallCallback {
     }
 }
 
+let mediaChannelNotification = Notification.Name(rawValue: "mediaChannelNotification")
+let mediaDeviceNotification = Notification.Name(rawValue: "mediaDeviceNotification")
+let callNotification = Notification.Name(rawValue: "callNotification")
+let clientNotification = Notification.Name(rawValue: "clientNotification")
+
+extension JCRoom: JCCallCallback {
+    func onCallItemAdd(_ item: JCCallItem) {
+        NotificationCenter.default.post(name: callNotification, object: nil, userInfo: nil);
+    }
+    
+    func onCallItemRemove(_ item: JCCallItem, reason: JCCallReason, description: String?) {
+        NotificationCenter.default.post(name: callNotification, object: nil, userInfo: nil);
+    }
+    
+    func onCallItemUpdate(_ item: JCCallItem, changeParam: JCCallChangeParam?) {
+        NotificationCenter.default.post(name: callNotification, object: nil, userInfo: nil);
+    }
+    
+    func onMessageReceive(_ item: JCCallItem, type: String, content: String) {
+        
+    }
+    
+    func onMissedCallItem(_ item: JCCallItem) {
+        
+    }
+    
+    func onDtmfReceived(_ item: JCCallItem, value: JCCallDtmf) {
+        
+    }
+}
+
 extension JCRoom: JCClientCallback {
     
     func onLogin(_ result: Bool, reason: JCClientReason) {
- 
+        NotificationCenter.default.post(name: clientNotification, object: nil, userInfo: nil);
     }
 
     func onLogout(_ reason: JCClientReason) {
-
+        NotificationCenter.default.post(name: clientNotification, object: nil, userInfo: nil);
     }
 
     func onClientStateChange(_ state: JCClientState, oldState: JCClientState) {
-
+        NotificationCenter.default.post(name: clientNotification, object: nil, userInfo: nil);
     }
     
     func onOnlineMessageReceive(_ userId: String!, content: String!) {
@@ -145,59 +154,59 @@ extension JCRoom: JCClientCallback {
 extension JCRoom: JCMediaDeviceCallback {
 
     func onCameraUpdate() {
-        JcCallStateApiSetup.onEvent()
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onAudioOutputTypeChange(_ audioOutputType: String!) {
-        
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onRenderReceived(_ canvas: JCMediaDeviceVideoCanvas!) {
-        
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onRenderStart(_ canvas: JCMediaDeviceVideoCanvas!) {
-        
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onAudioInerruptAndResume(_ interrupt: Bool) {
-        
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 }
 
 extension JCRoom: JCMediaChannelCallback {
 
     func onParticipantVolumeChange(_ participant: JCMediaChannelParticipant!) {
-        
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
     
     func onMediaChannelStateChange(_ state: JCMediaChannelState, oldState: JCMediaChannelState) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelStateChangeNotification), object: nil, userInfo: nil);
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onMediaChannelPropertyChange(_ changeParam: JCMediaChannelPropChangeParam!) {
-    
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onJoin(_ result: Bool, reason: JCMediaChannelReason, channelId: String!) {
         if result {
-            self.mediaDevice.enableSpeaker(true)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnJoinSuccessNotification), object: nil, userInfo: nil);
+//            self.mediaDevice.enableSpeaker(true)
+            NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
         } else {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnJoinFailNotification), object: nil, userInfo: nil);
+            NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
         }
     }
 
     func onLeave(_ reason: JCMediaChannelReason, channelId: String!) {
         if reason == .over {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnLeaveOverNotification), object: nil, userInfo: nil);
+            NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
         } else {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnLeaveNotification), object: nil, userInfo: nil);
+            NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
         }
     }
 
     func onStop(_ result: Bool, reason: JCMediaChannelReason) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnStopNotification), object: nil, userInfo: nil);
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onQuery(_ operationId: Int32, result: Bool, reason: JCMediaChannelReason, queryInfo: JCMediaChannelQueryInfo!) {
@@ -205,15 +214,15 @@ extension JCRoom: JCMediaChannelCallback {
     }
 
     func onParticipantJoin(_ participant: JCMediaChannelParticipant!) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnParticipantJoinNotification), object: participant, userInfo: nil);
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: participant, userInfo: nil);
     }
 
     func onParticipantLeft(_ participant: JCMediaChannelParticipant!) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnParticipantLeftNotification), object: participant, userInfo: nil);
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: participant, userInfo: nil);
     }
 
     func onParticipantUpdate(_ participant: JCMediaChannelParticipant!, participantChangeParam: JCMediaChannelParticipantChangeParam!) {
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: kMediaChannelOnParticipantUpdateNotification), object: nil, userInfo: nil);
+        NotificationCenter.default.post(name: mediaDeviceNotification, object: nil, userInfo: nil);
     }
 
     func onMessageReceive(_ type: String!, content: String!, fromUserId: String!) {

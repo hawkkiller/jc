@@ -16,6 +16,12 @@ enum JCNavType {
 
 var MY_APP_KEY = ""
 
+let kCallOnItemAdd = "kCallOnItemAdd"
+let kCallOnItemRemove = "kCallOnItemRemove"
+let kCallOnItemUpdate = "kCallOnItemUpdate"
+let kClientOnClientStateChange = "kClientOnClientStateChange"
+let kMediaDeviceOnAudioOutputTypeChange = "kMediaDeviceOnAudioOutputTypeChange"
+let kMediaDeviceOnCameraUpdate = "kMediaDeviceOnCameraUpdate"
 let kMediaChannelReasonKey = "kMediaChannelReasonKey"
 let kMdeiaChannelListKey = "kMdeiaChannelListKey"
 let kMediaChannelStateChangeNotification = "kMediaChannelStateChangeNotification"

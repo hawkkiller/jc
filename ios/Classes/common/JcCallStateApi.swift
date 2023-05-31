@@ -53,7 +53,7 @@ class JcCallStateApiSetup {
         callStatusSink?(api.callStatus())
     }
     
-    static func onEvent() {
+    @objc static func handleNotification(_ notification: NSNotification) {
         sendSelfMember()
         sendOtherMember()
         sendCallStatus()
@@ -69,6 +69,7 @@ class JcCallStateApiSetup {
             selfMemberChannel.setStreamHandler(nil)
             otherMemberChannel.setStreamHandler(nil)
             callStatusChannel.setStreamHandler(nil)
+            NotificationCenter.default.removeObserver(self)
             return
         }
         
@@ -86,22 +87,8 @@ class JcCallStateApiSetup {
             callStatusSink = sink
             sendCallStatus()
         }))
-    }
-}
-
-class StreamHandler: NSObject, FlutterStreamHandler {
-    private let onListen: (FlutterEventSink?) -> Void
-    init(onListen: @escaping (FlutterEventSink?) -> Void) {
-        self.onListen = onListen
-    }
-    
-    func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
-        onListen(events)
-        return nil
-    }
-
-    func onCancel(withArguments arguments: Any?) -> FlutterError? {
-        onListen(nil)
-        return nil
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(_:)), name: callNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification(_:)), name: mediaDeviceNotification, object: nil)
     }
 }
