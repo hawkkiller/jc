@@ -1,5 +1,4 @@
 import 'package:jc/jc.dart';
-import 'package:jc/src/model/client_state.dart';
 
 class JcSdk {
   JcSdk._();

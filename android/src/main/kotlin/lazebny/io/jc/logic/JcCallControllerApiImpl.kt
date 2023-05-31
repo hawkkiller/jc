@@ -37,10 +37,10 @@ class JcCallControllerApiImpl : JcCallControllerApi {
         }
     }
 
-    override fun call(userID: String, video: Boolean): Boolean {
+    override fun call(userID: String, video: Boolean, ticket: String): Boolean {
         val param = JCCall.CallParam(
             if (video) "video" else "audio",
-            "ticket",
+            ticket,
         )
 
         JCManager.getInstance().call.updateMediaConfig(

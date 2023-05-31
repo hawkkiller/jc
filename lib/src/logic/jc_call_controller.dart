@@ -50,6 +50,6 @@ base class JcCallController implements CallController {
   Stream<CallStatus> get status => _jcCallStateChannel.status;
 
   @override
-  Future<bool> call(String userID, {required bool video}) =>
-      _jcCallControllerApi.call(userID, video);
+  Future<bool> call(String userID, {required bool video, String ticket = ''}) =>
+      _jcCallControllerApi.call(userID, video, ticket);
 }

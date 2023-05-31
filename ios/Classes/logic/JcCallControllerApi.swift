@@ -41,12 +41,12 @@ class JcCallControllerApiImpl : JcCallControllerApi {
         JCRoom.shared.call.term(activeItem!, reason: .none, description: nil)
     }
     
-    func call(userID: String, video: Bool) throws -> Bool {
+    func call(userID: String, video: Bool, ticket: String) throws -> Bool {
         JCRoom.shared.call.mediaConfig = JCCallMediaConfig.generate(by: JCCallMediaConfigMode.modeIOT)
         let result = JCRoom.shared.call.call(
             userID,
             video: video,
-            callParam: JCCallParam(extraParam: video ? "video" : "audio", ticket: "ticket")
+            callParam: JCCallParam(extraParam: video ? "video" : "audio", ticket: ticket)
         )
         
         if (result) {

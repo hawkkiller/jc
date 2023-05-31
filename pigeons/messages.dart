@@ -52,7 +52,7 @@ abstract class JcCallControllerApi {
   /// Returns `true` if the call was initiated successfully, `false` otherwise.
   ///
   /// The client must be logged in before calling this method.
-  bool call(String userID, bool video);
+  bool call(String userID, bool video, String ticket);
 }
 
 @HostApi()

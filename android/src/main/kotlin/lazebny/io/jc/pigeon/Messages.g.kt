@@ -131,7 +131,7 @@ interface JcCallControllerApi {
    *
    * The client must be logged in before calling this method.
    */
-  fun call(userID: String, video: Boolean): Boolean
+  fun call(userID: String, video: Boolean, ticket: String): Boolean
 
   companion object {
     /** The codec used by JcCallControllerApi. */
@@ -239,9 +239,10 @@ interface JcCallControllerApi {
             val args = message as List<Any?>
             val userIDArg = args[0] as String
             val videoArg = args[1] as Boolean
+            val ticketArg = args[2] as String
             var wrapped: List<Any?>
             try {
-              wrapped = listOf<Any?>(api.call(userIDArg, videoArg))
+              wrapped = listOf<Any?>(api.call(userIDArg, videoArg, ticketArg))
             } catch (exception: Throwable) {
               wrapped = wrapError(exception)
             }

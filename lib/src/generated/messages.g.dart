@@ -217,12 +217,12 @@ class JcCallControllerApi {
   /// Returns `true` if the call was initiated successfully, `false` otherwise.
   ///
   /// The client must be logged in before calling this method.
-  Future<bool> call(String arg_userID, bool arg_video) async {
+  Future<bool> call(String arg_userID, bool arg_video, String arg_ticket) async {
     final BasicMessageChannel<Object?> channel = BasicMessageChannel<Object?>(
         'dev.flutter.pigeon.JcCallControllerApi.call', codec,
         binaryMessenger: _binaryMessenger);
     final List<Object?>? replyList =
-        await channel.send(<Object?>[arg_userID, arg_video]) as List<Object?>?;
+        await channel.send(<Object?>[arg_userID, arg_video, arg_ticket]) as List<Object?>?;
     if (replyList == null) {
       throw PlatformException(
         code: 'channel-error',

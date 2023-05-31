@@ -118,14 +118,14 @@ protocol JcCallControllerApi {
   /// Returns `true` if the call was initiated successfully, `false` otherwise.
   ///
   /// The client must be logged in before calling this method.
-  func call(userID: String, video: Bool) throws -> Bool
+  func call(userID: String, video: Bool, ticket: String) throws -> Bool
 }
 
 /// Generated setup class from Pigeon to handle messages through the `binaryMessenger`.
 class JcCallControllerApiSetup {
   /// The codec used by JcCallControllerApi.
   /// Sets up an instance of `JcCallControllerApi` to handle messages through the `binaryMessenger`.
-static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcCallControllerApi?) {
+  static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcCallControllerApi?) {
     /// Enables or disables the microphone.
     let enableMicrophoneChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.JcCallControllerApi.enableMicrophone", binaryMessenger: binaryMessenger)
     if let api = api {
@@ -217,8 +217,9 @@ static func setUp(binaryMessenger: FlutterBinaryMessenger, api: JcCallController
         let args = message as! [Any?]
         let userIDArg = args[0] as! String
         let videoArg = args[1] as! Bool
+        let ticketArg = args[2] as! String
         do {
-          let result = try api.call(userID: userIDArg, video: videoArg)
+          let result = try api.call(userID: userIDArg, video: videoArg, ticket: ticketArg)
           reply(wrapResult(result))
         } catch {
           reply(wrapError(error))
