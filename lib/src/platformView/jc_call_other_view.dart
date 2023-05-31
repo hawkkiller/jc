@@ -22,20 +22,27 @@ class _JCCallOtherViewState extends State<JCCallOtherView> {
           );
           if (Platform.isAndroid) {
             return AndroidView(
-              key: const GlobalObjectKey('JcCallOtherView'),
               viewType: 'JcCallOtherView',
               layoutDirection: TextDirection.ltr,
               onPlatformViewCreated: (id) {
                 _controller = JcViewController.create(viewId: id);
+                _controller?.setLayoutParams(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
               },
             );
           }
           if (Platform.isIOS) {
             return UiKitView(
               viewType: 'JcCallOtherView',
-              key: const GlobalObjectKey('JcCallOtherView'),
+              layoutDirection: TextDirection.ltr,
               onPlatformViewCreated: (id) {
                 _controller = JcViewController.create(viewId: id);
+                _controller?.setLayoutParams(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
               },
             );
           }

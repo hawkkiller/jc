@@ -113,17 +113,12 @@ class _CallScreenState extends State<CallScreen> {
                             Text('Status: $status'),
                             Text('SelfMember: $selfMember'),
                             Text('OtherMember: $otherMember'),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                if (selfMember != null && selfMember.video)
-                                  const SizedBox(
-                                    height: 200,
-                                    width: 100,
-                                    child: JcCallSelfView(),
-                                  ),
-                              ],
-                            ),
+                            if (selfMember != null && selfMember.video)
+                              const SizedBox(
+                                height: 200,
+                                width: 100,
+                                child: JcCallSelfView(),
+                              ),
                             if (otherMember != null && otherMember.video)
                               const SizedBox(
                                 height: 200,

@@ -15,7 +15,6 @@ class JcCallControllerApiImpl : JcCallControllerApi {
             return
         }
         let res = JCRoom.shared.call.muteMicrophone(activeItem!, mute: !value)
-        NSLog("enableMicrophone \(res)")
     }
     
     func enableCamera(value: Bool) throws {
@@ -43,11 +42,13 @@ class JcCallControllerApiImpl : JcCallControllerApi {
     }
     
     func call(userID: String, video: Bool) throws -> Bool {
+        JCRoom.shared.call.mediaConfig = JCCallMediaConfig.generate(by: JCCallMediaConfigMode.modeIOT)
         let result = JCRoom.shared.call.call(
             userID,
             video: video,
             callParam: JCCallParam(extraParam: video ? "video" : "audio", ticket: "ticket")
         )
+        
         if (result) {
             JCRoom.shared.mediaDevice.startAudio()
         }

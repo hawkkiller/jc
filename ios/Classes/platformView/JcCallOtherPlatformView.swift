@@ -32,45 +32,40 @@ class JcCallOtherPlatformView: NSObject, FlutterPlatformView, JcViewController {
         return _view
     }
     
-    private let frame: CGRect
     private let viewId: Int64
     private let messenger: FlutterBinaryMessenger
     private var _view: UIView
+    private var canvas: JCMediaDeviceVideoCanvas?
 
     init(frame: CGRect, viewId: Int64, messenger: FlutterBinaryMessenger, args: Any?) {
-        self.frame = frame
         self.viewId = viewId
         self.messenger = messenger
 
         // Creating the view
-        _view = UIView(frame: frame)
-
-        // Assuming 'canvas' is an accessible object and videoView is a UIView subclass
-        let canvas = JCRoom.shared.call.getActiveCallItem()?.startOtherVideo(
-            .fullScreen
-        )
-
-        // If 'canvas.videoView' is already added in a view, remove it
-        canvas?.videoView.removeFromSuperview()
+        _view = UIView()
         
-        if (canvas?.videoView != nil) {
-            // Add the video view to 'view'
-            _view.addSubview(canvas!.videoView)
-        }
         super.init()
-
+        
         // Setup JcViewController
         JcViewControllerSetup.setUp(binaryMessenger: messenger, viewId: viewId, viewController: self)
+
+        // Assuming 'canvas' is an accessible object and videoView is a UIView subclass
+        canvas = JCRoom.shared.call.getActiveCallItem()?.startOtherVideo(
+            .fullScreen
+        )
+        
+        // Add the video view to 'view'
+        _view.addSubview(canvas!.videoView)
+        
     }
     
     func setLayoutParams(width: Double, height: Double) {
-        _view.frame.size.width = CGFloat(width)
-        _view.frame.size.height = CGFloat(height)
+        canvas?.videoView.frame = CGRect(x: 0, y: 0, width: width, height: height)
     }
     
     // Dispose function
     func dispose() {
-        _view.removeFromSuperview()
+        canvas?.videoView.removeFromSuperview()
         JcViewControllerSetup.setUp(binaryMessenger: messenger, viewId: viewId, viewController: nil)
     }
 }

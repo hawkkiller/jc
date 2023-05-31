@@ -11,7 +11,6 @@ class JcCallSelfView extends StatefulWidget {
 }
 
 class _JcCallSelfViewState extends State<JcCallSelfView> {
-
   JcViewController? _controller;
 
   @override
@@ -28,15 +27,24 @@ class _JcCallSelfViewState extends State<JcCallSelfView> {
               layoutDirection: TextDirection.ltr,
               onPlatformViewCreated: (id) {
                 _controller = JcViewController.create(viewId: id);
+                _controller?.setLayoutParams(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
               },
             );
           }
           if (Platform.isIOS) {
             return UiKitView(
               viewType: 'JcCallSelfView',
-              key: const GlobalObjectKey('JcCallSelfView'),
+              layoutDirection: TextDirection.ltr,
+              // key: const GlobalObjectKey('JcCallSelfView'),
               onPlatformViewCreated: (id) {
                 _controller = JcViewController.create(viewId: id);
+                _controller?.setLayoutParams(
+                  width: constraints.maxWidth,
+                  height: constraints.maxHeight,
+                );
               },
             );
           }
