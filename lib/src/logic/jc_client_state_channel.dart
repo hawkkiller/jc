@@ -12,8 +12,8 @@ base class JcClientStateChannelBase implements JcClientStateChannel {
     _eventChannel = const EventChannel('lazebny.io.jc/client_state_event_channel');
     clientStateStream = _eventChannel
         .receiveBroadcastStream()
-        .whereType<String>()
-        .map(ClientState.fromString);
+        .whereType<int>()
+        .map(ClientState.fromInt);
   }
 
   late final EventChannel _eventChannel;

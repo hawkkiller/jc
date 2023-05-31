@@ -1,16 +1,16 @@
 enum ClientState {
+  notInit,
   idle,
-  logging,
-  logined;
+  logining,
+  logined,
+  logouting;
 
-  static ClientState fromString(String value) => switch (value) {
-        'idle' => ClientState.idle,
-        'logging' => ClientState.logging,
-        'logined' => ClientState.logined,
-        _ => throw ArgumentError.value(
-            value,
-            'value',
-            'Invalid value',
-          )
+  static ClientState fromInt(int value) => switch (value) {
+        0 => ClientState.notInit,
+        1 => ClientState.idle,
+        2 => ClientState.logining,
+        3 => ClientState.logined,
+        4 => ClientState.logouting,
+        _ => throw Exception('Unknown ClientState value: $value'),
       };
 }

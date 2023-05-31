@@ -3,10 +3,12 @@ package lazebny.io.jc
 import JcApi
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import lazebny.io.jc.common.JcCallStateApi
+import lazebny.io.jc.common.JcClientStateApi
 import lazebny.io.jc.common.JcConferenceStateApi
 import lazebny.io.jc.logic.JcApiImpl
 import lazebny.io.jc.logic.JcCallControllerApiImpl
 import lazebny.io.jc.logic.JcCallStateApiImpl
+import lazebny.io.jc.logic.JcClientStateApiImpl
 import lazebny.io.jc.logic.JcConferenceControllerApiImpl
 import lazebny.io.jc.logic.JcConferenceStateApiImpl
 import lazebny.io.jc.platformView.JcCallOtherPlatformViewFactory
@@ -22,9 +24,11 @@ class JcPlugin : FlutterPlugin {
         val jcCallStateApi = JcCallStateApiImpl()
         val jcConferenceControllerApi = JcConferenceControllerApiImpl()
         val jcConferenceStateApi = JcConferenceStateApiImpl()
+        val jcClientStateApi = JcClientStateApiImpl()
         JcApi.setUp(flutterPluginBinding.binaryMessenger, jcApi)
         JcCallControllerApi.setUp(flutterPluginBinding.binaryMessenger, jcCallControllerApi)
         JcCallStateApi.setUp(flutterPluginBinding.binaryMessenger, jcCallStateApi)
+        JcClientStateApi.setUp(flutterPluginBinding.binaryMessenger, jcClientStateApi)
         JcConferenceControllerApi.setUp(
             flutterPluginBinding.binaryMessenger,
             jcConferenceControllerApi,

@@ -1,4 +1,4 @@
-import 'package:jc/src/logic/shared_platform.dart';
+import 'package:jc/src/logic/jc_shared_platform.dart';
 import 'package:jc/src/model/client_state.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -8,11 +8,11 @@ abstract class JcPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static JcPlatform _instance = SharedPlatform();
+  static JcPlatform _instance = JcSharedPlatform();
 
   /// The default instance of [JcPlatform] to use.
   ///
-  /// Defaults to [SharedPlatform].
+  /// Defaults to [JcSharedPlatform].
   static JcPlatform get instance => _instance;
 
   /// Platform-specific implementations should set this with their own

@@ -39,10 +39,6 @@ base class JcConferenceStateChannelBase implements JcConferenceStateChannel {
 
     members = _jcConferenceStateEventChannelOther
         .receiveBroadcastStream()
-        .map((event) {
-          log('Event: $event');
-          return event;
-        })
         .whereType<List<Object?>>()
         .asyncMap<List<ConferenceMember>>(
           (event) => Stream.fromIterable(event).asyncMap(
@@ -61,11 +57,6 @@ base class JcConferenceStateChannelBase implements JcConferenceStateChannel {
 
     selfMember = _jcConferenceStateEventChannelSelf
         .receiveBroadcastStream()
-        .map((event) {
-          log('Event: $event');
-          log('Event type: ${event.runtimeType}');
-          return event;
-        })
         .whereType<Map<Object?, Object?>>()
         .map((event) => event.cast<String, Object?>())
         .map($selfConferenceMemberCodec.decode);

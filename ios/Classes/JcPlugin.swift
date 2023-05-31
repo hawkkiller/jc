@@ -9,6 +9,8 @@ public class JcPlugin: NSObject, FlutterPlugin {
     
     let jcConferenceStateApi = JcConferenceStateApiImpl()
     let jcConferenceControllerApi = JcConferenceControllerApiImpl()
+      
+    let jcClientStateApi = JcClientStateApiImpl()
 
     JcApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcApi)
     JcCallControllerApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcCallControllerApi)
@@ -16,6 +18,7 @@ public class JcPlugin: NSObject, FlutterPlugin {
       
     JcConferenceControllerApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcConferenceControllerApi)
     JcConferenceStateApiSetup.setUp(binaryMessenger: registrar.messenger(), stateApi: jcConferenceStateApi)
+      JcClientStateApiSetup.setUp(messenger: registrar.messenger(), api: jcClientStateApi)
     registrar.register(JcCallSelfPlatformViewFactory(messenger: registrar.messenger()), withId: "JcCallSelfView")
     registrar.register(JcCallOtherPlatformViewFactory(messenger: registrar.messenger()), withId: "JcCallOtherView")
       registrar.register(JcConferencePlatformViewFactory(messenger: registrar.messenger()), withId: "JcConferenceView")
