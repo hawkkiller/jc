@@ -10,5 +10,7 @@ public class JcPlugin: NSObject, FlutterPlugin {
     JcApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcApi)
     JcCallControllerApiSetup.setUp(binaryMessenger: registrar.messenger(), api: jcCallControllerApi)
     JcCallStateApiSetup.setUp(binaryMessenger: registrar.messenger(), stateApi: jcCallStateApi)
+    registrar.register(JcCallSelfPlatformViewFactory(messenger: registrar.messenger()), withId: "JcCallSelfView")
+    registrar.register(JcCallOtherPlatformViewFactory(messenger: registrar.messenger()), withId: "JcCallOtherSelfView")
   }
 }
